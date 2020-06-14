@@ -1,0 +1,43 @@
+---
+title: "UCF Bachelor's Thesis"
+subtitle: "Analysis of Coded Data"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+# Pilot
+
+Importing the Atlas.ti dataset. (NB: I changed the document number for the second holding of Finogenov to make distinguishing easier)
+
+```{r}
+library(readxl)
+pilot <- read_excel("pilot coding data.xlsx")
+```
+
+Merging the observations spread out over multiple rows into one.
+
+```{r}
+pilot2 <- pilot %>% 
+  select(D, 3, 13:70) %>% 
+  group_by(D) %>% 
+  summarise_all(list(~ toString(unique(na.omit(.)))))
+```
+
+Getting summary statistics.
+
+```{r}
+pilot2 %>% 
+  summarise_all(list(~n()))
+
+pilot_subset <- pilot2 %>% 
+  select(D, Q49:Q53) %>%  
+  pivot_longer(names_to = "var", values_to = "val", cols = c(everything(), -D))
+
+pilot_subset %>% 
+  group_by(var, val) %>% 
+  summarise_all(list(~length(.)))
+```
+

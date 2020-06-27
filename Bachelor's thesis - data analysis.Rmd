@@ -52,15 +52,26 @@ library(readxl)
 cases_raw <- read_excel("case codings database.xlsx")
 ```
 
-Removing the explanation for each level and turning -77, -88, and -99 into `NA`s:
+Removing the explanation for each level, turning ordinal variables into ordinal factors, and the remaining ones into normal factors:
 
 ```{r}
 cases <- cases_raw %>% 
+  select(gc_dec:l_train) %>% 
   mutate_all(list(~ str_replace(., "\\s=\\s.*", ""))) %>% 
-  mutate_all(list(~ dplyr::recode(.,`-99` = NA_character_,
-                                  `-88` = NA_character_,
-                                   `-77` = NA_character_
-                                  )))
+  mutate(
+    scrutiny = scrutiny     %>% as.numeric() %>% as.ordered(),
+    f_prev = f_prev         %>% as.numeric() %>% as.ordered(),
+    f_dispute = f_dispute   %>% as.numeric() %>% as.ordered(),
+    uof_deaths = uof_deaths %>% as.numeric() %>% as.ordered(),
+    t_who = t_who           %>% as.numeric() %>% as.ordered(),
+    t_nature = t_nature     %>% as.numeric() %>% as.ordered(),
+    uof_sa = uof_sa         %>% as.numeric() %>% as.ordered(),
+    uof_nature = uof_nature %>% as.numeric() %>% as.ordered(),
+    o_control = o_control   %>% as.numeric() %>% as.ordered()
+  )  %>% 
+  mutate_all(list(~ as_factor(.)))
+
+cases <- cbind(select(cases_raw, ID:respondent), cases)
 ```
 
 # Collapsing Variables and Categories
@@ -108,13 +119,20 @@ library(rtemis)
 
 
 ```{r}
-cases_test <- cases_raw %>% select(scrutiny:l_train) %>% mutate_all(list(~ str_replace(., "\\s=\\s.*", "")))
-cases_test$violation <- cases_raw$h_viol
+cases_test <- cases %>% select(scrutiny:l_train, h_viol)
+# cases_test <- cases_raw %>%
+#   select(scrutiny:l_train, h_viol) %>%
+#   mutate_all(list(~ str_replace(., "\\s=\\s.*", ""))) %>%
+#   mutate_all(list(~ dplyr::recode(.,`-99` = "99",
+#                                   `-88` = "88",
+#                                    `-77` = "77"
+#                                   )))
 checkData(cases_test)
 cases_test2 <- preprocess(cases_test, character2factor = TRUE)
+# write_csv(cases_test2, "cases_test.csv")
 
-cases_test <- cases
-cases_test$violation <- cases$h_viol
+# cases_test <- cases
+# cases_test$violation <- cases$h_viol
 # cases_test2 <- cases_test %>% 
 #   mutate(o_evac = recode(o_evac, "0" = "1"), o_distinct = recode(o_distinct, "0" = "1")) %>% 
 #   mutate(o_evac = replace_na(o_evac, 0), o_distinct = replace_na(o_distinct, 0)) %>% 
@@ -122,8 +140,15 @@ cases_test$violation <- cases$h_viol
 
 
 checkData(cases_test2)
-cases_test.tree <- s.ADDTREE(cases_test2, gamma = 0.5, learning.rate = 0.0001, upsample = TRUE)
+
+cases_test.tree <- s.ADDTREE(cases_test, gamma = 0.5, learning.rate = 0.0001, upsample = TRUE)
 dplot3.addtree(cases_test.tree)
 print(cases_test.tree$mod$addtree.pruned, "Estimate")
+
+#With testing
+res <- resample(cases_test, n.resamples = 77, resampler = "kfold")
+cases_test.train <- cases_test[res$Fold_1, ]
+cases_test.test <- cases_test[-res$Fold_1, ]
+cases_test.tree <- s.ADDTREE(x = cases_test.train, x.test = cases_test.test, gamma = 0.5, learning.rate = 0.0001, upsample = TRUE)
 ```
 

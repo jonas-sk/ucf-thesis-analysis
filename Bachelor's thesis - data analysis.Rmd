@@ -41,3 +41,89 @@ pilot_subset %>%
   summarise_all(list(~length(.)))
 ```
 
+---
+
+# Tidying the Final Dataset
+
+Importing the Excel coded cases dataset:
+
+```{r}
+library(readxl)
+cases_raw <- read_excel("case codings database.xlsx")
+```
+
+Removing the explanation for each level and turning -77, -88, and -99 into `NA`s:
+
+```{r}
+cases <- cases_raw %>% 
+  mutate_all(list(~ str_replace(., "\\s=\\s.*", ""))) %>% 
+  mutate_all(list(~ dplyr::recode(.,`-99` = NA_character_,
+                                  `-88` = NA_character_,
+                                   `-77` = NA_character_
+                                  )))
+```
+
+# Collapsing Variables and Categories
+
+```{r}
+IVcases <- cases %>% select(scrutiny:l_train) #Only want to analyze and reduce the IVs
+```
+
+Checking if there are any superfluous levels.
+
+```{r}
+IVcases %>% sapply(table)
+IVcases %>% sapply(table) %>% sapply(prop.table)
+```
+
+There are multiple methods possible to achieve this. Principally, these can be divided into factor analysis and principal component analysis (PCA). Both have variations that are compatible with categorical data. I pick PCA here because, conceptually, it focuses on reducing the number of dimensions (variables) while factor analysis is focused on uncovering latent factors. Within the realm of non-linear PCA, I picked multiple factor analysis (MFA) because it is well suited for grouped data (like in my case)
+
+```{r}
+library(FactoMineR)
+library(factoextra)
+
+
+MFAcases <- MFA(IVcases, group = c(6, 14, 5, 11, 3), #Groups based on coding form
+                type = rep("n", 5), 
+                name.group = c("assessment", "exceptions", "force", "operation", "law"))
+```
+
+Using Chi-square and Cramer's V to find relations of dependence between the cateogrical variables
+
+# Using Classification Trees
+
+Installing `rtemis`, a library for advanced machine learning, used here for the additive trees.
+
+```{r eval=FALSE}
+install.packages("remotes")
+remotes::install_github("egenn/rtemis")
+install.packages(c("e1071", "gbm", "glmnet", "pbapply", "plyr", "ranger", "rpart", "data.tree", "DiagrammeR", "missRanger")) #Additional dependencies
+```
+
+Test run:
+
+```{r}
+library(rtemis)
+```
+
+
+```{r}
+cases_test <- cases_raw %>% select(scrutiny:l_train) %>% mutate_all(list(~ str_replace(., "\\s=\\s.*", "")))
+cases_test$violation <- cases_raw$h_viol
+checkData(cases_test)
+cases_test2 <- preprocess(cases_test, character2factor = TRUE)
+
+cases_test <- cases
+cases_test$violation <- cases$h_viol
+# cases_test2 <- cases_test %>% 
+#   mutate(o_evac = recode(o_evac, "0" = "1"), o_distinct = recode(o_distinct, "0" = "1")) %>% 
+#   mutate(o_evac = replace_na(o_evac, 0), o_distinct = replace_na(o_distinct, 0)) %>% 
+#   preprocess(impute = TRUE, character2factor = TRUE, impute.type = "missForest")
+
+
+checkData(cases_test2)
+cases_test.tree <- s.ADDTREE(cases_test2, gamma = 0.5, learning.rate = 0.0001, upsample = TRUE)
+dplot3.addtree(cases_test.tree)
+print(cases_test.tree$mod$addtree.pruned, "Estimate")
+```
+

@@ -1766,6 +1766,13 @@ summary {
 <p>Importing the Atlas.ti dataset. (NB: I changed the document number for the second holding of Finogenov to make distinguishing easier)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkeGwpXG5cbmBgYCJ9 -->
+<pre class="r"><code>library(readxl)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiVGhlcmUgd2VyZSAyNCB3YXJuaW5ncyAodXNlIHdhcm5pbmdzKCkgdG8gc2VlIHRoZW0pXG4ifQ== -->
+<pre><code>There were 24 warnings (use warnings() to see them)</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Merging the observations spread out over multiple rows into one.</p>
@@ -1792,10 +1799,125 @@ summary {
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<hr />
+</div>
+<div id="tidying-the-final-dataset" class="section level1">
+<h1>Tidying the Final Dataset</h1>
+<p>Importing the Excel coded cases dataset:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2FzZXMgPC0gcmVhZF9leGNlbChcImNhc2UgY29kaW5ncyBkYXRhYmFzZS54bHN4XCIpXG5cbmBgYCJ9 -->
+<pre class="r"><code>cases &lt;- read_excel(&quot;case codings database.xlsx&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gcmVhZF9leGNlbChcImNhc2UgY29kaW5ncyBkYXRhYmFzZS54bHN4XCIpIDogXG4gIGNvdWxkIG5vdCBmaW5kIGZ1bmN0aW9uIFwicmVhZF9leGNlbFwiXG4ifQ== -->
+<pre><code>Error in read_excel(&quot;case codings database.xlsx&quot;) : 
+  could not find function &quot;read_excel&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Removing the explanation for each level and turning -77, -88, and -99 into <code>NA</code>s:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2FzZXMgPC0gY2FzZXNfcmF3ICU+JSBcblxuYGBgIn0= -->
+<pre class="r"><code>cases &lt;- cases_raw %&gt;% 
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZyBtZXNzYWdlOlxuSW4gcmVhZENoYXIoZmlsZSwgc2l6ZSwgVFJVRSkgOiB0cnVuY2F0aW5nIHN0cmluZyB3aXRoIGVtYmVkZGVkIG51bHNcbiJ9 -->
+<pre><code>Warning message:
+In readChar(file, size, TRUE) : truncating string with embedded nuls</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuICBtdXRhdGVfYWxsKGxpc3QofiBzdHJfcmVwbGFjZSguLCBcIlxcXFxzPVxcXFxzLipcIiwgXCJcIikpKSAlPiUgXG4gIG11dGF0ZV9hbGwobGlzdCh+IGRwbHlyOjpyZWNvZGUoLixgLTk5YCA9IE5BX2NoYXJhY3Rlcl8sXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYC04OGAgPSBOQV9jaGFyYWN0ZXJfXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBgLTc3YCA9IE5BX2NoYXJhY3Rlcl9cbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICApKSlcbmBgYCJ9 -->
+<pre class="r"><code>  mutate_all(list(~ str_replace(., &quot;\\s=\\s.*&quot;, &quot;&quot;))) %&gt;% 
+  mutate_all(list(~ dplyr::recode(.,`-99` = NA_character_,
+                                  `-88` = NA_character_
+                                  # `-77` = NA_character_
+                                  )))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="collapsing-variables-and-categories" class="section level1">
+<h1>Collapsing Variables and Categories</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Checking if there are any superfluous levels.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuSVZjYXNlcyAlPiUgc2FwcGx5KHRhYmxlKVxuSVZjYXNlcyAlPiUgc2FwcGx5KHRhYmxlKSAlPiUgc2FwcGx5KHByb3AudGFibGUpXG5gYGAifQ== -->
+<pre class="r"><code>IVcases %&gt;% sapply(table)
+IVcases %&gt;% sapply(table) %&gt;% sapply(prop.table)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>There are multiple methods possible to achieve this. Principally, these can be divided into factor analysis and principal component analysis (PCA). Both have variations that are compatible with categorical data. I pick PCA here because, conceptually, it focuses on reducing the number of dimensions (variables) while factor analysis is focused on uncovering latent factors. Within the realm of non-linear PCA, I picked multiple factor analysis (MFA) because it is well suited for grouped data (like in my case)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShGYWN0b01pbmVSKVxubGlicmFyeShmYWN0b2V4dHJhKVxuXG5cbk1GQWNhc2VzIDwtIE1GQShJVmNhc2VzLCBncm91cCA9IGMoNiwgMTQsIDUsIDExLCAzKSwgI0dyb3VwcyBiYXNlZCBvbiBjb2RpbmcgZm9ybVxuICAgICAgICAgICAgICAgIHR5cGUgPSByZXAoXCJuXCIsIDUpLCBcbiAgICAgICAgICAgICAgICBuYW1lLmdyb3VwID0gYyhcImFzc2Vzc21lbnRcIiwgXCJleGNlcHRpb25zXCIsIFwiZm9yY2VcIiwgXCJvcGVyYXRpb25cIiwgXCJsYXdcIikpXG5gYGAifQ== -->
+<pre class="r"><code>library(FactoMineR)
+library(factoextra)
+
+
+MFAcases &lt;- MFA(IVcases, group = c(6, 14, 5, 11, 3), #Groups based on coding form
+                type = rep(&quot;n&quot;, 5), 
+                name.group = c(&quot;assessment&quot;, &quot;exceptions&quot;, &quot;force&quot;, &quot;operation&quot;, &quot;law&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Using Chi-square and Cramer’s V to find relations of dependence between the cateogrical variables</p>
+</div>
+<div id="using-classification-trees" class="section level1">
+<h1>Using Classification Trees</h1>
+<p>Installing <code>rtemis</code>, a library for advanced machine learning, used here for the additive trees.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImluc3RhbGwucGFja2FnZXMoXCJyZW1vdGVzXCIpIiwicmVtb3Rlczo6aW5zdGFsbF9naXRodWIoXCJlZ2Vubi9ydGVtaXNcIikiLCJpbnN0YWxsLnBhY2thZ2VzKGMoXCJlMTA3MVwiLCBcImdibVwiLCBcImdsbW5ldFwiLCBcInBiYXBwbHlcIiwgXCJwbHlyXCIsIFwicmFuZ2VyXCIsIFwicnBhcnRcIiwgXCJkYXRhLnRyZWVcIiwgXCJEaWFncmFtbWVSXCIsIFwibWlzc1JhbmdlclwiKSkgI0FkZGl0aW9uYWwgZGVwZW5kZW5jaWVzIl19 -->
+<pre class="r"><code>install.packages(&quot;remotes&quot;)
+remotes::install_github(&quot;egenn/rtemis&quot;)
+install.packages(c(&quot;e1071&quot;, &quot;gbm&quot;, &quot;glmnet&quot;, &quot;pbapply&quot;, &quot;plyr&quot;, &quot;ranger&quot;, &quot;rpart&quot;, &quot;data.tree&quot;, &quot;DiagrammeR&quot;, &quot;missRanger&quot;)) #Additional dependencies</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Test run:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShydGVtaXMpXG5gYGAifQ== -->
+<pre class="r"><code>library(rtemis)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2hlY2tEYXRhKGNhc2VzX3Rlc3QpXG5cbmBgYCJ9 -->
+<pre class="r"><code>checkData(cases_test)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICBEYXRhc2V0OiBcdTAwMWJbMzZtXHUwMDFiWzFtY2FzZXNfdGVzdFx1MDAxYlsyMm1cdTAwMWJbMzltIFxuXG4gIFx1MDAxYls5MG1cdTAwMWJbMW1bWyBcdTAwMWJbMjJtXHUwMDFiWzM5bVx1MDAxYlsxbVN1bW1hcnlcdTAwMWJbMjJtXHUwMDFiWzkwbVx1MDAxYlsxbSBdXVxuXHUwMDFiWzIybVx1MDAxYlszOW0gIFx1MDAxYlsxbTc3XHUwMDFiWzIybSBjYXNlcyB3aXRoIFx1MDAxYlsxbTUyXHUwMDFiWzIybSBmZWF0dXJlczogXG4gICogXHUwMDFiWzFtMFx1MDAxYlsyMm0gY29udGludW91cyBmZWF0dXJlcyBcbiAgKiBcdTAwMWJbMW0wXHUwMDFiWzIybSBpbnRlZ2VyIGZlYXR1cmVzIFxuICAqIFx1MDAxYlsxbTBcdTAwMWJbMjJtIGNhdGVnb3JpY2FsIGZlYXR1cmVzXG4gICogXHUwMDFiWzFtMFx1MDAxYlsyMm0gY29uc3RhbnQgZmVhdHVyZXMgXG4gICogXHUwMDFiWzFtMFx1MDAxYlsyMm0gZHVwbGljYXRlZCBjYXNlcyBcbiAgKiBcdTAwMWJbMzNtXHUwMDFiWzFtMzZcdTAwMWJbMjJtXHUwMDFiWzM5bSBmZWF0dXJlcyBpbmNsdWRlICdOQScgdmFsdWVzOyBcdTAwMWJbMzNtXHUwMDFiWzFtODI3XHUwMDFiWzIybVx1MDAxYlszOW0gJ05BJyB2YWx1ZXMgdG90YWxcbiAgICAqKiBNYXggcGVyY2VudCBtaXNzaW5nIGluIGEgZmVhdHVyZSBpcyBcdTAwMWJbMzNtXHUwMDFiWzFtODguMzFcdTAwMWJbMjJtXHUwMDFiWzM5bVx1MDAxYlszM21cdTAwMWJbMW0lXHUwMDFiWzIybVx1MDAxYlszOW0gKFx1MDAxYlsxbW9fZXZhY1x1MDAxYlsyMm0pXG4gICAgKiogTWF4IHBlcmNlbnQgbWlzc2luZyBpbiBhIGNhc2UgaXMgXHUwMDFiWzMzbVx1MDAxYlsxbTQ0LjIzXHUwMDFiWzIybVx1MDAxYlszOW1cdTAwMWJbMzNtXHUwMDFiWzFtJVx1MDAxYlsyMm1cdTAwMWJbMzltIChjYXNlICNcdTAwMWJbMW0xNFx1MDAxYlsyMm0pXG5cbiAgXHUwMDFiWzkwbVx1MDAxYlsxbVtbIFx1MDAxYlsyMm1cdTAwMWJbMzltXHUwMDFiWzFtUmVjb21tZW5kYXRpb25zXHUwMDFiWzIybVx1MDAxYls5MG1cdTAwMWJbMW0gXV1cblx1MDAxYlsyMm1cdTAwMWJbMzltXHUwMDFiWzMzbVx1MDAxYlsxbSAgKiBDb25zaWRlciBpbXB1dGluZyBtaXNzaW5nIHZhbHVlcyBvciB1c2UgY29tcGxldGUgY2FzZXMgb25seVxuXHUwMDFiWzIybVx1MDAxYlszOW1cbiJ9 -->
+<pre><code>  Dataset: [36m[1mcases_test[22m[39m 
+
+  [90m[1m[[ [22m[39m[1mSummary[22m[90m[1m ]]
+[22m[39m  [1m77[22m cases with [1m52[22m features: 
+  * [1m0[22m continuous features 
+  * [1m0[22m integer features 
+  * [1m0[22m categorical features
+  * [1m0[22m constant features 
+  * [1m0[22m duplicated cases 
+  * [33m[1m36[22m[39m features include &#39;NA&#39; values; [33m[1m827[22m[39m &#39;NA&#39; values total
+    ** Max percent missing in a feature is [33m[1m88.31[22m[39m[33m[1m%[22m[39m ([1mo_evac[22m)
+    ** Max percent missing in a case is [33m[1m44.23[22m[39m[33m[1m%[22m[39m (case #[1m14[22m)
+
+  [90m[1m[[ [22m[39m[1mRecommendations[22m[90m[1m ]]
+[22m[39m[33m[1m  * Consider imputing missing values or use complete cases only
+[22m[39m</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlVDRiBCYWNoZWxvcidzIFRoZXNpcyINCnN1YnRpdGxlOiAiQW5hbHlzaXMgb2YgQ29kZWQgRGF0YSINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmBgYA0KDQojIFBpbG90DQoNCkltcG9ydGluZyB0aGUgQXRsYXMudGkgZGF0YXNldC4gKE5COiBJIGNoYW5nZWQgdGhlIGRvY3VtZW50IG51bWJlciBmb3IgdGhlIHNlY29uZCBob2xkaW5nIG9mIEZpbm9nZW5vdiB0byBtYWtlIGRpc3Rpbmd1aXNoaW5nIGVhc2llcikNCg0KYGBge3J9DQpsaWJyYXJ5KHJlYWR4bCkNCnBpbG90IDwtIHJlYWRfZXhjZWwoInBpbG90IGNvZGluZyBkYXRhLnhsc3giKQ0KYGBgDQoNCk1lcmdpbmcgdGhlIG9ic2VydmF0aW9ucyBzcHJlYWQgb3V0IG92ZXIgbXVsdGlwbGUgcm93cyBpbnRvIG9uZS4NCg0KYGBge3J9DQpwaWxvdDIgPC0gcGlsb3QgJT4lIA0KICBzZWxlY3QoRCwgMywgMTM6NzApICU+JSANCiAgZ3JvdXBfYnkoRCkgJT4lIA0KICBzdW1tYXJpc2VfYWxsKGxpc3QofiB0b1N0cmluZyh1bmlxdWUobmEub21pdCguKSkpKSkNCmBgYA0KDQpHZXR0aW5nIHN1bW1hcnkgc3RhdGlzdGljcy4NCg0KYGBge3J9DQpwaWxvdDIgJT4lIA0KICBzdW1tYXJpc2VfYWxsKGxpc3Qofm4oKSkpDQoNCnBpbG90X3N1YnNldCA8LSBwaWxvdDIgJT4lIA0KICBzZWxlY3QoRCwgUTQ5OlE1MykgJT4lICANCiAgcGl2b3RfbG9uZ2VyKG5hbWVzX3RvID0gInZhciIsIHZhbHVlc190byA9ICJ2YWwiLCBjb2xzID0gYyhldmVyeXRoaW5nKCksIC1EKSkNCg0KcGlsb3Rfc3Vic2V0ICU+JSANCiAgZ3JvdXBfYnkodmFyLCB2YWwpICU+JSANCiAgc3VtbWFyaXNlX2FsbChsaXN0KH5sZW5ndGgoLikpKQ0KYGBgDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlVDRiBCYWNoZWxvcidzIFRoZXNpcyINCnN1YnRpdGxlOiAiQW5hbHlzaXMgb2YgQ29kZWQgRGF0YSINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmBgYA0KDQojIFBpbG90DQoNCkltcG9ydGluZyB0aGUgQXRsYXMudGkgZGF0YXNldC4gKE5COiBJIGNoYW5nZWQgdGhlIGRvY3VtZW50IG51bWJlciBmb3IgdGhlIHNlY29uZCBob2xkaW5nIG9mIEZpbm9nZW5vdiB0byBtYWtlIGRpc3Rpbmd1aXNoaW5nIGVhc2llcikNCg0KYGBge3J9DQpsaWJyYXJ5KHJlYWR4bCkNCnBpbG90IDwtIHJlYWRfZXhjZWwoInBpbG90IGNvZGluZyBkYXRhLnhsc3giKQ0KYGBgDQoNCk1lcmdpbmcgdGhlIG9ic2VydmF0aW9ucyBzcHJlYWQgb3V0IG92ZXIgbXVsdGlwbGUgcm93cyBpbnRvIG9uZS4NCg0KYGBge3J9DQpwaWxvdDIgPC0gcGlsb3QgJT4lIA0KICBzZWxlY3QoRCwgMywgMTM6NzApICU+JSANCiAgZ3JvdXBfYnkoRCkgJT4lIA0KICBzdW1tYXJpc2VfYWxsKGxpc3QofiB0b1N0cmluZyh1bmlxdWUobmEub21pdCguKSkpKSkNCmBgYA0KDQpHZXR0aW5nIHN1bW1hcnkgc3RhdGlzdGljcy4NCg0KYGBge3J9DQpwaWxvdDIgJT4lIA0KICBzdW1tYXJpc2VfYWxsKGxpc3Qofm4oKSkpDQoNCnBpbG90X3N1YnNldCA8LSBwaWxvdDIgJT4lIA0KICBzZWxlY3QoRCwgUTQ5OlE1MykgJT4lICANCiAgcGl2b3RfbG9uZ2VyKG5hbWVzX3RvID0gInZhciIsIHZhbHVlc190byA9ICJ2YWwiLCBjb2xzID0gYyhldmVyeXRoaW5nKCksIC1EKSkNCg0KcGlsb3Rfc3Vic2V0ICU+JSANCiAgZ3JvdXBfYnkodmFyLCB2YWwpICU+JSANCiAgc3VtbWFyaXNlX2FsbChsaXN0KH5sZW5ndGgoLikpKQ0KYGBgDQoNCi0tLQ0KDQojIFRpZHlpbmcgdGhlIEZpbmFsIERhdGFzZXQNCg0KSW1wb3J0aW5nIHRoZSBFeGNlbCBjb2RlZCBjYXNlcyBkYXRhc2V0Og0KDQpgYGB7cn0NCmxpYnJhcnkocmVhZHhsKQ0KY2FzZXNfcmF3IDwtIHJlYWRfZXhjZWwoImNhc2UgY29kaW5ncyBkYXRhYmFzZS54bHN4IikNCmBgYA0KDQpSZW1vdmluZyB0aGUgZXhwbGFuYXRpb24gZm9yIGVhY2ggbGV2ZWwgYW5kIHR1cm5pbmcgLTc3LCAtODgsIGFuZCAtOTkgaW50byBgTkFgczoNCg0KYGBge3J9DQpjYXNlcyA8LSBjYXNlc19yYXcgJT4lIA0KICBtdXRhdGVfYWxsKGxpc3QofiBzdHJfcmVwbGFjZSguLCAiXFxzPVxccy4qIiwgIiIpKSkgJT4lIA0KICBtdXRhdGVfYWxsKGxpc3QofiBkcGx5cjo6cmVjb2RlKC4sYC05OWAgPSBOQV9jaGFyYWN0ZXJfLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGAtODhgID0gTkFfY2hhcmFjdGVyXywNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYC03N2AgPSBOQV9jaGFyYWN0ZXJfDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgKSkpDQpgYGANCg0KIyBDb2xsYXBzaW5nIFZhcmlhYmxlcyBhbmQgQ2F0ZWdvcmllcw0KDQpgYGB7cn0NCklWY2FzZXMgPC0gY2FzZXMgJT4lIHNlbGVjdChzY3J1dGlueTpsX3RyYWluKSAjT25seSB3YW50IHRvIGFuYWx5emUgYW5kIHJlZHVjZSB0aGUgSVZzDQpgYGANCg0KQ2hlY2tpbmcgaWYgdGhlcmUgYXJlIGFueSBzdXBlcmZsdW91cyBsZXZlbHMuDQoNCmBgYHtyfQ0KSVZjYXNlcyAlPiUgc2FwcGx5KHRhYmxlKQ0KSVZjYXNlcyAlPiUgc2FwcGx5KHRhYmxlKSAlPiUgc2FwcGx5KHByb3AudGFibGUpDQpgYGANCg0KVGhlcmUgYXJlIG11bHRpcGxlIG1ldGhvZHMgcG9zc2libGUgdG8gYWNoaWV2ZSB0aGlzLiBQcmluY2lwYWxseSwgdGhlc2UgY2FuIGJlIGRpdmlkZWQgaW50byBmYWN0b3IgYW5hbHlzaXMgYW5kIHByaW5jaXBhbCBjb21wb25lbnQgYW5hbHlzaXMgKFBDQSkuIEJvdGggaGF2ZSB2YXJpYXRpb25zIHRoYXQgYXJlIGNvbXBhdGlibGUgd2l0aCBjYXRlZ29yaWNhbCBkYXRhLiBJIHBpY2sgUENBIGhlcmUgYmVjYXVzZSwgY29uY2VwdHVhbGx5LCBpdCBmb2N1c2VzIG9uIHJlZHVjaW5nIHRoZSBudW1iZXIgb2YgZGltZW5zaW9ucyAodmFyaWFibGVzKSB3aGlsZSBmYWN0b3IgYW5hbHlzaXMgaXMgZm9jdXNlZCBvbiB1bmNvdmVyaW5nIGxhdGVudCBmYWN0b3JzLiBXaXRoaW4gdGhlIHJlYWxtIG9mIG5vbi1saW5lYXIgUENBLCBJIHBpY2tlZCBtdWx0aXBsZSBmYWN0b3IgYW5hbHlzaXMgKE1GQSkgYmVjYXVzZSBpdCBpcyB3ZWxsIHN1aXRlZCBmb3IgZ3JvdXBlZCBkYXRhIChsaWtlIGluIG15IGNhc2UpDQoNCmBgYHtyfQ0KbGlicmFyeShGYWN0b01pbmVSKQ0KbGlicmFyeShmYWN0b2V4dHJhKQ0KDQoNCk1GQWNhc2VzIDwtIE1GQShJVmNhc2VzLCBncm91cCA9IGMoNiwgMTQsIDUsIDExLCAzKSwgI0dyb3VwcyBiYXNlZCBvbiBjb2RpbmcgZm9ybQ0KICAgICAgICAgICAgICAgIHR5cGUgPSByZXAoIm4iLCA1KSwgDQogICAgICAgICAgICAgICAgbmFtZS5ncm91cCA9IGMoImFzc2Vzc21lbnQiLCAiZXhjZXB0aW9ucyIsICJmb3JjZSIsICJvcGVyYXRpb24iLCAibGF3IikpDQpgYGANCg0KVXNpbmcgQ2hpLXNxdWFyZSBhbmQgQ3JhbWVyJ3MgViB0byBmaW5kIHJlbGF0aW9ucyBvZiBkZXBlbmRlbmNlIGJldHdlZW4gdGhlIGNhdGVvZ3JpY2FsIHZhcmlhYmxlcw0KDQojIFVzaW5nIENsYXNzaWZpY2F0aW9uIFRyZWVzDQoNCkluc3RhbGxpbmcgYHJ0ZW1pc2AsIGEgbGlicmFyeSBmb3IgYWR2YW5jZWQgbWFjaGluZSBsZWFybmluZywgdXNlZCBoZXJlIGZvciB0aGUgYWRkaXRpdmUgdHJlZXMuDQoNCmBgYHtyIGV2YWw9RkFMU0V9DQppbnN0YWxsLnBhY2thZ2VzKCJyZW1vdGVzIikNCnJlbW90ZXM6Omluc3RhbGxfZ2l0aHViKCJlZ2Vubi9ydGVtaXMiKQ0KaW5zdGFsbC5wYWNrYWdlcyhjKCJlMTA3MSIsICJnYm0iLCAiZ2xtbmV0IiwgInBiYXBwbHkiLCAicGx5ciIsICJyYW5nZXIiLCAicnBhcnQiLCAiZGF0YS50cmVlIiwgIkRpYWdyYW1tZVIiLCAibWlzc1JhbmdlciIpKSAjQWRkaXRpb25hbCBkZXBlbmRlbmNpZXMNCmBgYA0KDQpUZXN0IHJ1bjoNCg0KYGBge3J9DQpsaWJyYXJ5KHJ0ZW1pcykNCmBgYA0KDQoNCmBgYHtyfQ0KY2FzZXNfdGVzdCA8LSBjYXNlc19yYXcgJT4lIHNlbGVjdChzY3J1dGlueTpsX3RyYWluKSAlPiUgbXV0YXRlX2FsbChsaXN0KH4gc3RyX3JlcGxhY2UoLiwgIlxccz1cXHMuKiIsICIiKSkpDQpjYXNlc190ZXN0JHZpb2xhdGlvbiA8LSBjYXNlc19yYXckaF92aW9sDQpjaGVja0RhdGEoY2FzZXNfdGVzdCkNCmNhc2VzX3Rlc3QyIDwtIHByZXByb2Nlc3MoY2FzZXNfdGVzdCwgY2hhcmFjdGVyMmZhY3RvciA9IFRSVUUpDQoNCmNhc2VzX3Rlc3QgPC0gY2FzZXMNCmNhc2VzX3Rlc3QkdmlvbGF0aW9uIDwtIGNhc2VzJGhfdmlvbA0KIyBjYXNlc190ZXN0MiA8LSBjYXNlc190ZXN0ICU+JSANCiMgICBtdXRhdGUob19ldmFjID0gcmVjb2RlKG9fZXZhYywgIjAiID0gIjEiKSwgb19kaXN0aW5jdCA9IHJlY29kZShvX2Rpc3RpbmN0LCAiMCIgPSAiMSIpKSAlPiUgDQojICAgbXV0YXRlKG9fZXZhYyA9IHJlcGxhY2VfbmEob19ldmFjLCAwKSwgb19kaXN0aW5jdCA9IHJlcGxhY2VfbmEob19kaXN0aW5jdCwgMCkpICU+JSANCiMgICBwcmVwcm9jZXNzKGltcHV0ZSA9IFRSVUUsIGNoYXJhY3RlcjJmYWN0b3IgPSBUUlVFLCBpbXB1dGUudHlwZSA9ICJtaXNzRm9yZXN0IikNCg0KDQpjaGVja0RhdGEoY2FzZXNfdGVzdDIpDQpjYXNlc190ZXN0LnRyZWUgPC0gcy5BRERUUkVFKGNhc2VzX3Rlc3QyLCBnYW1tYSA9IDAuNSwgbGVhcm5pbmcucmF0ZSA9IDAuMDAwMSwgdXBzYW1wbGUgPSBUUlVFKQ0KZHBsb3QzLmFkZHRyZWUoY2FzZXNfdGVzdC50cmVlKQ0KcHJpbnQoY2FzZXNfdGVzdC50cmVlJG1vZCRhZGR0cmVlLnBydW5lZCwgIkVzdGltYXRlIikNCmBgYA0KDQo=</div>
 
 
 

@@ -101,21 +101,134 @@ MFAcases <- MFA(IVcases, group = c(6, 14, 5, 11, 3), #Groups based on coding for
 
 Using Chi-square and Cramer's V to find relations of dependence between the cateogrical variables
 
-# Using Classification Trees
+# Preparing for the Use of Decision Trees
 
-Installing `rtemis`, a library for advanced machine learning, used here for the additive trees.
+Installing `rtemis`, a library for advanced machine learning, which used here for the additive trees.
 
 ```{r eval=FALSE}
 install.packages("remotes")
 remotes::install_github("egenn/rtemis")
-install.packages(c("e1071", "gbm", "glmnet", "pbapply", "plyr", "ranger", "rpart", "data.tree", "DiagrammeR", "missRanger")) #Additional dependencies
+install.packages(c("e1071", "gbm", "glmnet", "pbapply", "plyr", "ranger", "rpart", "data.tree", "DiagrammeR", "missRanger", "plotly", "DiagrammeRsvg", "rsvg")) #Additional dependencies
 ```
 
-Test run:
+Importing the `rtemis` library.
 
-```{r}
+```{r warning=FALSE}
 library(rtemis)
 ```
+
+Create the datasets for each of our four outcome variables. This involves putting the outcome variable as last column and recoding the factor such that the "positive" outcome (i.e. a violation) is the first level of the factor. Furthermore, the three other outcome variables are turned into binomial variables with one positive (violation) level and one negative (no violation, not related or uncertain) level. 
+
+```{r}
+cases.viol <- cases %>% 
+  select(scrutiny:l_train, h_viol) %>% 
+  mutate(h_viol = factor(h_viol, levels = c(1, 0)))
+cases.force <- cases %>%   
+  select(scrutiny:l_train, h_force) %>% 
+  mutate(h_force = recode(h_force, `0` = 0, `1` = 0, `-88` = 0, `2`= 1)) %>% 
+  mutate(h_force = factor(h_force, levels = c(1, 0)))
+cases.op <- cases %>% 
+  select(scrutiny:l_train, h_operation) %>% 
+  mutate(h_operation = recode(h_operation, `0` = 0, `1` = 0, `-88` = 0, `2`= 1)) %>% 
+  mutate(h_operation = factor(h_operation, levels = c(1, 0)))
+cases.law <- cases %>% 
+  select(scrutiny:l_train, h_law) %>% 
+  mutate(h_law = recode(h_law, `0` = 0, `1` = 0, `-88` = 0, `2`= 1)) %>% 
+  mutate(h_law = factor(h_law, levels = c(1, 0)))
+```
+
+# Using Decision Trees
+
+## Model Selection and Assessment
+
+Perform a nested cross-validation for hyperparameter tuning (model selection) and model assessment. A 10-fold cross-validation is performed to test model generalizability. Within each resample, another 10-fold cross-validation is performed to tune the gamma hyperparameter between four different options. In total, 1600 models are thus run. 
+
+```{r}
+cases.viol.tree <- elevate(cases.viol, mod = "addtree",
+                           resampler = "kfold", n.resamples = 10,
+                           grid.resample.rtset = rtset.resample("kfold", 10),
+                           gamma = c(0.1, 0.5, 0.9, 1.3),
+                           learning.rate = 0.001,
+                           seed = 2020)
+saveRDS(cases.viol.tree, "cases-viol-tree.rds")
+
+cases.force.tree <- elevate(cases.force, mod = "addtree",
+                           resampler = "kfold", n.resamples = 10,
+                           grid.resample.rtset = rtset.resample("kfold", 10),
+                           gamma = c(0.1, 0.5, 0.9, 1.3),
+                           learning.rate = 0.001,
+                           seed = 2020)
+saveRDS(cases.force.tree, "cases-force-tree.rds")
+
+cases.op.tree <- elevate(cases.op, mod = "addtree",
+                           resampler = "kfold", n.resamples = 10,
+                           grid.resample.rtset = rtset.resample("kfold", 10),
+                           gamma = c(0.1, 0.5, 0.9, 1.3),
+                           learning.rate = 0.001,
+                           seed = 2020)
+saveRDS(cases.op.tree, "cases-op-tree.rds")
+
+cases.law.tree <- elevate(cases.law, mod = "addtree",
+                           resampler = "kfold", n.resamples = 10,
+                           grid.resample.rtset = rtset.resample("kfold", 10),
+                           gamma = c(0.1, 0.5, 0.9, 1.3),
+                           learning.rate = 0.001,
+                           seed = 2020)
+saveRDS(cases.law.tree, "cases-law-tree.rds")
+
+```
+
+After running the models, we would now like to extract the respective information. This encompasses the values in the list below, which includes the  aggregated values of the evaluation measures and the hyperparameters picked.
+
+* Sensitivity (recall)
+* Specificity
+* Precision (positive predictive value)
+* Negative predictive value
+* Gamma $\gamma$ ($= \frac{\lambda}{1 + \lambda}$)
+
+Extracting the evaluation measures:
+
+```{r}
+
+```
+
+Extracting the best hyperparameters:
+
+```{r}
+cases.viol.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% select(gamma) %>% table()
+cases.force.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% select(gamma) %>% table()
+cases.op.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% select(gamma) %>% table()
+cases.law.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% select(gamma) %>% table()
+
+cases.viol.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma))
+cases.force.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma))
+cases.op.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma))
+cases.law.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma))
+```
+
+## 
+
+
+
+# Experiments
+
+```{r}
+cases_test.tree <- read_csv("cases_test.csv") %>% 
+  preprocess(numeric2factor = TRUE) %>% 
+  elevate(mod = "addtree", resampler = "kfold", n.resamples = 2, upsample = TRUE,
+          grid.resample.rtset = rtset.resample("kfold", 2),
+          gamma = c(0.5, 1))
+
+cases_test.tree <- read_csv("cases_test.csv") %>% 
+  preprocess(numeric2factor = TRUE) %>% 
+  s.ADDTREE(outdir = "test")
+
+dplot3.addtree(cases_test.tree$mod$elevate.ADDTREE.repeat1$ADDTREE2$mod1)
+cases_test.tree$plotVarImp()
+dplot3.addtree(cases_test2.tree)
+plot(cases_test.tree$mod$addtree.pruned)
+```
+
 
 
 ```{r}
@@ -146,9 +259,10 @@ dplot3.addtree(cases_test.tree)
 print(cases_test.tree$mod$addtree.pruned, "Estimate")
 
 #With testing
-res <- resample(cases_test, n.resamples = 77, resampler = "kfold")
-cases_test.train <- cases_test[res$Fold_1, ]
-cases_test.test <- cases_test[-res$Fold_1, ]
-cases_test.tree <- s.ADDTREE(x = cases_test.train, x.test = cases_test.test, gamma = 0.5, learning.rate = 0.0001, upsample = TRUE)
+res <- resample(cases_test, n.resamples = 10, resampler = "kfold")
+cases_test.train <- cases_test[res$Fold_2, ]
+cases_test.test <- cases_test[-res$Fold_2, ]
+cases_test.tree <- s.ADDTREE(x = cases_test.train, x.test = cases_test.test, gamma = 2, learning.rate = 0.01)
+dplot3.addtree(cases_test.tree)
 ```
 

@@ -4,8 +4,21 @@ subtitle: "Analysis of Coded Data"
 output: html_notebook
 ---
 
+Installing `rtemis`, a library for advanced machine learning which used here for the additive trees, as well as necessary dependencies.
+
+```{r eval=FALSE}
+install.packages("remotes")
+remotes::install_github("egenn/rtemis")
+install.packages(c("e1071", "gbm", "glmnet", "pbapply", "plyr", "ranger", "rpart", "data.tree", "DiagrammeR", "missRanger", "plotly", "DiagrammeRsvg", "rsvg")) #Additional dependencies
+```
+
+
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
+library(rtemis)
+#Loaded sparately to export the plots
+library(DiagrammeRsvg)
+library(rsvg)
 ```
 
 # Pilot
@@ -103,20 +116,6 @@ Using Chi-square and Cramer's V to find relations of dependence between the cate
 
 # Preparing for the Use of Decision Trees
 
-Installing `rtemis`, a library for advanced machine learning, which used here for the additive trees.
-
-```{r eval=FALSE}
-install.packages("remotes")
-remotes::install_github("egenn/rtemis")
-install.packages(c("e1071", "gbm", "glmnet", "pbapply", "plyr", "ranger", "rpart", "data.tree", "DiagrammeR", "missRanger", "plotly", "DiagrammeRsvg", "rsvg")) #Additional dependencies
-```
-
-Importing the `rtemis` library.
-
-```{r warning=FALSE}
-library(rtemis)
-```
-
 Create the datasets for each of our four outcome variables. This involves putting the outcome variable as last column and recoding the factor such that the "positive" outcome (i.e. a violation) is the first level of the factor. Furthermore, the three other outcome variables are turned into binomial variables with one positive (violation) level and one negative (no violation, not related or uncertain) level. 
 
 ```{r}
@@ -143,11 +142,11 @@ cases.law <- cases %>%
 
 Perform a nested cross-validation for hyperparameter tuning (model selection) and model assessment. A 10-fold cross-validation is performed to test model generalizability. Within each resample, another 10-fold cross-validation is performed to tune the gamma hyperparameter between four different options. In total, 1600 models are thus run. 
 
-```{r}
+```{r eval=FALSE}
 cases.viol.tree <- elevate(cases.viol, mod = "addtree",
                            resampler = "kfold", n.resamples = 10,
                            grid.resample.rtset = rtset.resample("kfold", 10),
-                           gamma = c(0.1, 0.5, 0.9, 1.3),
+                           gamma = c(0.1, 0.3, 0.5, 0.7, 0.9),
                            learning.rate = 0.001,
                            seed = 2020)
 saveRDS(cases.viol.tree, "cases-viol-tree.rds")
@@ -155,7 +154,7 @@ saveRDS(cases.viol.tree, "cases-viol-tree.rds")
 cases.force.tree <- elevate(cases.force, mod = "addtree",
                            resampler = "kfold", n.resamples = 10,
                            grid.resample.rtset = rtset.resample("kfold", 10),
-                           gamma = c(0.1, 0.5, 0.9, 1.3),
+                           gamma = c(0.1, 0.3, 0.5, 0.7, 0.9),
                            learning.rate = 0.001,
                            seed = 2020)
 saveRDS(cases.force.tree, "cases-force-tree.rds")
@@ -163,7 +162,7 @@ saveRDS(cases.force.tree, "cases-force-tree.rds")
 cases.op.tree <- elevate(cases.op, mod = "addtree",
                            resampler = "kfold", n.resamples = 10,
                            grid.resample.rtset = rtset.resample("kfold", 10),
-                           gamma = c(0.1, 0.5, 0.9, 1.3),
+                           gamma = c(0.1, 0.3, 0.5, 0.7, 0.9),
                            learning.rate = 0.001,
                            seed = 2020)
 saveRDS(cases.op.tree, "cases-op-tree.rds")
@@ -171,15 +170,46 @@ saveRDS(cases.op.tree, "cases-op-tree.rds")
 cases.law.tree <- elevate(cases.law, mod = "addtree",
                            resampler = "kfold", n.resamples = 10,
                            grid.resample.rtset = rtset.resample("kfold", 10),
-                           gamma = c(0.1, 0.5, 0.9, 1.3),
+                           gamma = c(0.1, 0.3, 0.5, 0.7, 0.9),
                            learning.rate = 0.001,
                            seed = 2020)
 saveRDS(cases.law.tree, "cases-law-tree.rds")
 
 ```
 
+Read the AddTrees in from the saved file because re-executing the model run for knitting is too computationally expensive:
+
+```{r}
+cases.viol.tree <- readRDS("cases-viol-tree.rds")
+cases.force.tree <- readRDS("cases-force-tree.rds")
+cases.op.tree <- readRDS("cases-op-tree.rds")
+cases.law.tree <- readRDS("cases-law-tree.rds")
+```
+
+Getting some summaries on the models: 
+
+```{r}
+cases.viol.tree$plot(main = "AddTree Violation: Aggregated Test Performance") %>% export_svg()
+cases.force.tree$plot(filename = "cases-force-tree-plot.jpg")
+cases.op.tree$plot(filename = "cases-op-tree-plot.jpg")
+cases.law.tree$plot(filename = "cases-law-tree-plot.jpg")
+```
+
+```{r}
+message("h_viol model: \n")
+cases.viol.tree$describe()
+message("\n h_force model: \n")
+cases.force.tree$describe()
+message("\n h_operation model: \n")
+cases.op.tree$describe()
+message("\n h_law model: \n")
+cases.law.tree$describe()
+```
+
+
 After running the models, we would now like to extract the respective information. This encompasses the values in the list below, which includes the  aggregated values of the evaluation measures and the hyperparameters picked.
 
+* Balanced Accuracy
 * Sensitivity (recall)
 * Specificity
 * Precision (positive predictive value)
@@ -189,8 +219,13 @@ After running the models, we would now like to extract the respective informatio
 Extracting the evaluation measures:
 
 ```{r}
-
+cases.viol.tree$error.test.repeats
+cases.force.tree$error.test.repeats
+cases.op.tree$error.test.repeats
+cases.law.tree$error.test.repeats
 ```
+
+Side note: The difference between `tree$error.test.res.aggr`and `tree$error.test.res.mean`: Latter just takes the mean of the results of the 10 repeats while former aggregates the specific counts into a confusion matrix and then calculates the evaluation measures. The (theoretical) difference between `tree$error.test.repeats` and `tree$error.test.res.aggr`: Former relates to the repeats (default: `n.repeats` = 1) of the resampling process (summarizing those values with `... .mean` and `... .sd`) while `error.test.res` concerns the resamples in each repeat with `aggr` listing the aggregate values within each repeat (which is why they have the `$elevate.ADDTREE.repeat1` substructure) .
 
 Extracting the best hyperparameters:
 
@@ -200,17 +235,87 @@ cases.force.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% select(gamma) 
 cases.op.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% select(gamma) %>% table()
 cases.law.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% select(gamma) %>% table()
 
-cases.viol.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma))
-cases.force.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma))
-cases.op.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma))
-cases.law.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma))
+cases.viol.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma), median(gamma))
+cases.force.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma), median(gamma))
+cases.op.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma), median(gamma))
+cases.law.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(gamma), median(gamma))
 ```
 
-## 
+Based on the median hyperparameter, I pick $\gamma = 0.4$ for every model but `h_operation` for which I choose $\gamma = 0.7$ for the full model.
+
+## Full models for Prediction and Visualization
 
 
+Full model for `h_viol`:
+
+```{r}
+cases.viol.tree.full <- s.ADDTREE(cases.viol, gamma = 0.4, learning.rate = 0.001, seed = 2020)
+saveRDS(cases.viol.tree.full, "cases-viol-tree-full.rds")
+
+cases.viol.tree.full.viz <- dplot3.addtree(cases.viol.tree.full, fontname = "calibri")
+cases.viol.tree.full.viz %>% 
+  export_svg() %>% charToRaw() %>% 
+  rsvg_svg(file = "cases-viol-tree-full.svg")
+```
+
+Full model for `h_force`:
+
+```{r}
+cases.force.tree.full <- s.ADDTREE(cases.force, gamma = 0.4, learning.rate = 0.001, seed = 2020)
+saveRDS(cases.force.tree.full, "cases-force-tree-full.rds")
+
+cases.force.tree.full.viz <- dplot3.addtree(cases.force.tree.full, fontname = "calibri")
+cases.force.tree.full.viz %>% 
+  export_svg() %>% charToRaw() %>% 
+  rsvg_svg(file = "cases-force-tree-full.svg")
+```
+
+Full model for `h_operation`:
+
+```{r}
+cases.op.tree.full <- s.ADDTREE(cases.op, gamma = 0.4, learning.rate = 0.001, seed = 2020)
+saveRDS(cases.op.tree.full, "cases-op-tree-full.rds")
+
+cases.op.tree.full.viz <- dplot3.addtree(cases.op.tree.full, fontname = "calibri")
+cases.op.tree.full.viz %>% 
+  export_svg() %>% charToRaw() %>% 
+  rsvg_svg(file = "cases-op-tree-full.svg")
+```
+
+Full model for `h_law`:
+
+```{r}
+cases.law.tree.full <- s.ADDTREE(cases.law, gamma = 0.4, learning.rate = 0.001, seed = 2020)
+saveRDS(cases.law.tree.full, "cases-law-tree-full.rds")
+
+cases.law.tree.full.viz <- dplot3.addtree(cases.law.tree.full, fontname = "calibri")
+cases.law.tree.full.viz %>% 
+  export_svg() %>% charToRaw() %>% 
+  rsvg_svg(file = "cases-law-tree-full.svg")
+```
 
 # Experiments
+
+```{r}
+cases_test <- elevate(cases.viol, mod = "addtree",
+                           resampler = "kfold", n.resamples = 10,
+                           gamma = 0.3,
+                           learning.rate = 0.001,
+                           n.cores = 4,
+                           seed = 2020)
+```
+
+```{r}
+cases_test <- elevate(cases.viol, mod = "addtree",
+                           resampler = "kfold", 
+                           n.resamples = 2, n.repeats = 2,
+                           gamma = 0.3,
+                           learning.rate = 0.001,
+                           n.cores = 4,
+                           seed = 2020)
+
+```
+
 
 ```{r}
 cases_test.tree <- read_csv("cases_test.csv") %>% 

@@ -220,9 +220,37 @@ Extracting the evaluation measures:
 
 ```{r}
 cases.viol.tree$error.test.repeats
+data.frame("sensitivity_ci" = binom.test(53, 61)$conf.int, #Couldn't find way to extract values
+           "specificity_ci" = binom.test(13, 16)$conf.int,
+           "bacc_ci" = binom.test(round(cases.viol.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int) # %>% 
+  # mutate(bacc_ci2 = 
+  #          cases.viol.tree$error.test.repeats$`Balanced Accuracy` - 1.96 *
+  #          sqrt((
+  #              (first(sensitivity_ci) - last(sensitivity_ci) / (2 * 1.96))^2 +
+  #              (first(specificity_ci) - last(specificity_ci) / (2 * 1.96))^2
+  #            ) / 4)
+  #          / sqrt(10))
+```
+
+```{r}
 cases.force.tree$error.test.repeats
+data.frame("sensitivity_ci" = binom.test(28, 38)$conf.int, #Couldn't find way to extract values
+           "specificity_ci" = binom.test(27, 39)$conf.int,
+           "bacc_ci" = binom.test(round(cases.force.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int)
+```
+
+```{r}           
 cases.op.tree$error.test.repeats
+data.frame("sensitivity_ci" = binom.test(34, 43)$conf.int, #Couldn't find way to extract values
+           "specificity_ci" = binom.test(29, 34)$conf.int,
+           "bacc_ci" = binom.test(round(cases.op.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int)
+```
+
+```{r}
 cases.law.tree$error.test.repeats
+data.frame("sensitivity_ci" = binom.test(11, 14)$conf.int, #Couldn't find way to extract values
+           "specificity_ci" = binom.test(59, 63)$conf.int,
+           "bacc_ci" = binom.test(round(cases.viol.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int)
 ```
 
 Side note: The difference between `tree$error.test.res.aggr`and `tree$error.test.res.mean`: Latter just takes the mean of the results of the 10 repeats while former aggregates the specific counts into a confusion matrix and then calculates the evaluation measures. The (theoretical) difference between `tree$error.test.repeats` and `tree$error.test.res.aggr`: Former relates to the repeats (default: `n.repeats` = 1) of the resampling process (summarizing those values with `... .mean` and `... .sd`) while `error.test.res` concerns the resamples in each repeat with `aggr` listing the aggregate values within each repeat (which is why they have the `$elevate.ADDTREE.repeat1` substructure) .
@@ -296,7 +324,7 @@ cases.law.tree.full.viz %>%
 
 ### Manually reconstructing trees for higher legibility
 
-The DiagrammeR library is sued and the original layout and style is recreated but with better labels
+The DiagrammeR library is used and the original layout and style is recreated but with better labels
 
 ```{r}
 grViz("cases-viol-tree-graph.gv") %>% 

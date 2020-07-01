@@ -17,7 +17,7 @@ strict digraph cases_viol_tree_graph {
   // Inner nodes
   all [label = "All cases \n N = 77, 79%"]
   o_predict1 [label = <<i>Did they predict and plan for all <br/> reasonably foreseeable developments?</i> <br/>
-  Yes or uncertain (o_predict: -88, -99, 1, 2) <br/>
+  Yes or uncertain (o_predict: 1, 2, -88, -99) <br/>
   N = 37, 57%>]
   
   //Positive leaf nodes

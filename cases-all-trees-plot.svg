@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="223.66464mm"
-   height="245.65297mm"
-   viewBox="0 0 223.66464 245.65297"
+   width="160mm"
+   height="199.26688mm"
+   viewBox="0 0 160 199.26688"
    version="1.1"
    id="svg2361"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
@@ -1406,8 +1406,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="400.38301"
-     inkscape:cy="611.12958"
+     inkscape:cx="717.9235"
+     inkscape:cy="317.02477"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1418,17 +1418,50 @@
      inkscape:window-x="-9"
      inkscape:window-y="1341"
      inkscape:window-maximized="1"
-     inkscape:snap-text-baseline="true">
+     inkscape:snap-text-baseline="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true">
     <sodipodi:guide
-       position="68.642588,228.59999"
+       position="57.431834,186.04261"
        orientation="0,1"
        id="guide3718"
-       inkscape:locked="false" />
+       inkscape:locked="false"
+       inkscape:label="Ubuntu"
+       inkscape:color="rgb(0,0,255)" />
     <sodipodi:guide
-       position="10.837348,191.21826"
+       position="4.3048263e-08,169.71582"
        orientation="1,0"
        id="guide6202"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="85,130.57392"
+       orientation="1,0"
+       id="guide5568"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="8.6862595,83.042611"
+       orientation="0,1"
+       id="guide5570"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="26.080357,92.797574"
+       orientation="0,1"
+       id="guide5572"
        inkscape:locked="false" />
+    <sodipodi:guide
+       position="53.105655,176.04261"
+       orientation="0,1"
+       id="guide5574"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
   </sodipodi:namedview>
   <metadata
      id="metadata2358">
@@ -1438,7 +1471,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1446,19 +1479,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-0.3129493,-12.944767)">
+     transform="translate(-11.523703,-37.828431)">
     <g
-       transform="matrix(0.35277777,0,0,-0.35277777,0.3129493,144.29773)"
+       transform="matrix(0.28019421,0,0,-0.28019421,2.6195471,144.0527)"
        inkscape:label="cases-viol-tree-plot"
        id="g2914">
-      <g
-         id="g2916">
-        <path
-           inkscape:connector-curvature="0"
-           id="path2918"
-           style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           d="M 0,0 H 324 V 324 H 0 Z" />
-      </g>
       <g
          id="g2920">
         <g
@@ -2169,23 +2194,15 @@
                id="tspan6172"
                x="0"
                y="0"
-               style="font-weight:bold;font-size:16px">a) Violation Model (h_viol)</tspan>
+               style="font-weight:bold;font-size:15.10856819px">a) Comprehensive Model (h_viol)</tspan>
           </text>
         </g>
       </g>
     </g>
     <g
-       transform="matrix(0.35277777,0,0,-0.35277777,109.67759,144.29773)"
+       transform="matrix(0.28019421,0,0,-0.28019421,87.619547,144.0527)"
        inkscape:label="cases-force-tree-plot"
        id="g3728">
-      <g
-         id="g3730">
-        <path
-           inkscape:connector-curvature="0"
-           id="path3732"
-           style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           d="M 0,0 H 324 V 324 H 0 Z" />
-      </g>
       <g
          id="g3734">
         <g
@@ -2897,23 +2914,16 @@
                sodipodi:role="line"
                id="tspan6196"
                x="0"
-               y="0">b) Use of Force Model (h_force)</tspan>
+               y="0"
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:15.10856819px;font-family:Calibri;-inkscape-font-specification:'Calibri Bold'">b) Use of Force Model (h_force)</tspan>
           </text>
         </g>
       </g>
     </g>
     <g
-       transform="matrix(0.35277777,0,0,-0.35277777,0.3129493,258.59773)"
+       transform="matrix(0.28019421,0,0,-0.28019421,2.6195469,237.09531)"
        inkscape:label="cases-op-tree-plot"
        id="g4548">
-      <g
-         id="g4550">
-        <path
-           inkscape:connector-curvature="0"
-           id="path4552"
-           style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           d="M 0,0 H 324 V 324 H 0 Z" />
-      </g>
       <g
          id="g4554">
         <g
@@ -3599,18 +3609,6 @@
         </g>
       </g>
       <g
-         id="g5050">
-        <g
-           clip-path="url(#clipPath5056)"
-           id="g5052">
-          <path
-             inkscape:connector-curvature="0"
-             id="path5058"
-             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             d="m 97.45,210.35 h 178.2 V 324 H 97.45 Z" />
-        </g>
-      </g>
-      <g
          id="g5060">
         <g
            clip-path="url(#clipPath5066)"
@@ -3623,32 +3621,20 @@
                sodipodi:role="line"
                id="tspan6198"
                x="0"
-               y="0">c) Operation Model (h_operation)</tspan>
+               y="0"
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:15.10856819px;font-family:Calibri;-inkscape-font-specification:'Calibri Bold'">c) Operation Model (h_operation)</tspan>
           </text>
         </g>
       </g>
     </g>
     <g
-       transform="matrix(0.35277777,0,0,-0.35277777,109.67759,258.59773)"
+       transform="matrix(0.28019421,0,0,-0.28019421,87.619547,237.09531)"
        inkscape:label="cases-law-tree-plot"
-       id="g5368">
+       id="g5368"
+       style="display:inline">
       <g
-         id="g5370"
+         id="g5382"
          style="display:inline">
-        <path
-           inkscape:connector-curvature="0"
-           id="path5372"
-           style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           d="M 0,0 H 324 V 324 H 0 Z" />
-      </g>
-      <g
-         id="g5374">
-        <g
-           clip-path="url(#clipPath5380)"
-           id="g5376" />
-      </g>
-      <g
-         id="g5382">
         <g
            clip-path="url(#clipPath5388)"
            id="g5384">
@@ -3665,40 +3651,8 @@
         </g>
       </g>
       <g
-         id="g5394">
-        <g
-           clip-path="url(#clipPath5400)"
-           id="g5396" />
-      </g>
-      <g
-         id="g5402">
-        <g
-           clip-path="url(#clipPath5408)"
-           id="g5404">
-          <text
-             id="text5412"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,162.15,214.25)">
-            <tspan
-               id="tspan5410"
-               sodipodi:role="line"
-               y="0"
-               x="0 2.224 6.6719999 11.12 15.328">Index</tspan>
-          </text>
-          <text
-             id="text5416"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,43.22,252.41)">
-            <tspan
-               id="tspan5414"
-               sodipodi:role="line"
-               y="0"
-               x="0 5.776 11.552 16">NULL</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5418">
+         id="g5418"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5424)"
            id="g5420">
@@ -3715,40 +3669,8 @@
         </g>
       </g>
       <g
-         id="g5430">
-        <g
-           clip-path="url(#clipPath5436)"
-           id="g5432" />
-      </g>
-      <g
-         id="g5438">
-        <g
-           clip-path="url(#clipPath5444)"
-           id="g5440">
-          <text
-             id="text5448"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,51.7,91.52)">
-            <tspan
-               id="tspan5446"
-               sodipodi:role="line"
-               y="0"
-               x="0 2.224 6.6719999 11.12 15.328">Index</tspan>
-          </text>
-          <text
-             id="text5452"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,18.68,166.5)">
-            <tspan
-               id="tspan5450"
-               sodipodi:role="line"
-               y="0"
-               x="0 5.776 11.552 16">NULL</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5454">
+         id="g5454"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5460)"
            id="g5456">
@@ -3764,30 +3686,8 @@
         </g>
       </g>
       <g
-         id="g5466">
-        <g
-           clip-path="url(#clipPath5472)"
-           id="g5468" />
-      </g>
-      <g
-         id="g5474">
-        <g
-           clip-path="url(#clipPath5480)"
-           id="g5476">
-          <text
-             id="text5484"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,18.68,68.32)">
-            <tspan
-               id="tspan5482"
-               sodipodi:role="line"
-               y="0"
-               x="0 5.776 11.552 16">NULL</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5486">
+         id="g5486"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5492)"
            id="g5488">
@@ -3801,12 +3701,6 @@
                x="0">0</tspan>
           </text>
         </g>
-      </g>
-      <g
-         id="g5498">
-        <g
-           clip-path="url(#clipPath5504)"
-           id="g5500" />
       </g>
       <g
          id="g5506">
@@ -3836,7 +3730,8 @@
         </g>
       </g>
       <g
-         id="g5522">
+         id="g5522"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5528)"
            id="g5524">
@@ -3852,40 +3747,8 @@
         </g>
       </g>
       <g
-         id="g5534">
-        <g
-           clip-path="url(#clipPath5540)"
-           id="g5536" />
-      </g>
-      <g
-         id="g5542">
-        <g
-           clip-path="url(#clipPath5548)"
-           id="g5544">
-          <text
-             id="text5552"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,211.25,189.7)">
-            <tspan
-               id="tspan5550"
-               sodipodi:role="line"
-               y="0"
-               x="0 2.224 6.6719999 11.12 15.328">Index</tspan>
-          </text>
-          <text
-             id="text5556"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,141.41,227.87)">
-            <tspan
-               id="tspan5554"
-               sodipodi:role="line"
-               y="0"
-               x="0 5.776 11.552 16">NULL</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5558">
+         id="g5558"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5564)"
            id="g5560">
@@ -3901,7 +3764,8 @@
         </g>
       </g>
       <g
-         id="g5570">
+         id="g5570"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5576)"
            id="g5572">
@@ -3913,32 +3777,8 @@
         </g>
       </g>
       <g
-         id="g5580">
-        <g
-           clip-path="url(#clipPath5586)"
-           id="g5582">
-          <text
-             id="text5590"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,120.5,91.52)">
-            <tspan
-               id="tspan5588"
-               y="0"
-               x="0">0</tspan>
-          </text>
-          <text
-             id="text5594"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,43.22,174.5)">
-            <tspan
-               id="tspan5592"
-               y="0"
-               x="0">0</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5596">
+         id="g5596"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5602)"
            id="g5598">
@@ -3955,7 +3795,8 @@
         </g>
       </g>
       <g
-         id="g5608">
+         id="g5608"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5614)"
            id="g5610">
@@ -3967,23 +3808,8 @@
         </g>
       </g>
       <g
-         id="g5618">
-        <g
-           clip-path="url(#clipPath5624)"
-           id="g5620">
-          <text
-             id="text5628"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,43.22,76.32)">
-            <tspan
-               id="tspan5626"
-               y="0"
-               x="0">0</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5630">
+         id="g5630"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5636)"
            id="g5632">
@@ -3999,7 +3825,8 @@
         </g>
       </g>
       <g
-         id="g5642">
+         id="g5642"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5648)"
            id="g5644">
@@ -4011,32 +3838,8 @@
         </g>
       </g>
       <g
-         id="g5652">
-        <g
-           clip-path="url(#clipPath5658)"
-           id="g5654">
-          <text
-             id="text5662"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,218.69,91.52)">
-            <tspan
-               id="tspan5660"
-               y="0"
-               x="0">0</tspan>
-          </text>
-          <text
-             id="text5666"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,141.41,174.5)">
-            <tspan
-               id="tspan5664"
-               y="0"
-               x="0">0</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5668">
+         id="g5668"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5674)"
            id="g5670">
@@ -4052,7 +3855,8 @@
         </g>
       </g>
       <g
-         id="g5680">
+         id="g5680"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5686)"
            id="g5682">
@@ -4064,23 +3868,8 @@
         </g>
       </g>
       <g
-         id="g5690">
-        <g
-           clip-path="url(#clipPath5696)"
-           id="g5692">
-          <text
-             id="text5700"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,141.41,76.32)">
-            <tspan
-               id="tspan5698"
-               y="0"
-               x="0">0</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5702">
+         id="g5702"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5708)"
            id="g5704">
@@ -4097,7 +3886,8 @@
         </g>
       </g>
       <g
-         id="g5714">
+         id="g5714"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5720)"
            id="g5716">
@@ -4109,23 +3899,8 @@
         </g>
       </g>
       <g
-         id="g5724">
-        <g
-           clip-path="url(#clipPath5730)"
-           id="g5726">
-          <text
-             id="text5734"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,43.22,12.5)">
-            <tspan
-               id="tspan5732"
-               y="0"
-               x="0">0</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5736">
+         id="g5736"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5742)"
            id="g5738">
@@ -4152,7 +3927,8 @@
         </g>
       </g>
       <g
-         id="g5752">
+         id="g5752"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5758)"
            id="g5754">
@@ -4164,23 +3940,8 @@
         </g>
       </g>
       <g
-         id="g5762">
-        <g
-           clip-path="url(#clipPath5768)"
-           id="g5764">
-          <text
-             id="text5772"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,141.41,12.5)">
-            <tspan
-               id="tspan5770"
-               y="0"
-               x="0">0</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5774">
+         id="g5774"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5780)"
            id="g5776">
@@ -4207,7 +3968,8 @@
         </g>
       </g>
       <g
-         id="g5790">
+         id="g5790"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5796)"
            id="g5792">
@@ -4219,32 +3981,8 @@
         </g>
       </g>
       <g
-         id="g5800">
-        <g
-           clip-path="url(#clipPath5806)"
-           id="g5802">
-          <text
-             id="text5810"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,282.5,91.52)">
-            <tspan
-               id="tspan5808"
-               y="0"
-               x="0">0</tspan>
-          </text>
-          <text
-             id="text5814"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,239.59,174.5)">
-            <tspan
-               id="tspan5812"
-               y="0"
-               x="0">0</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5816">
+         id="g5816"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5822)"
            id="g5818">
@@ -4271,7 +4009,8 @@
         </g>
       </g>
       <g
-         id="g5832">
+         id="g5832"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5838)"
            id="g5834">
@@ -4283,23 +4022,8 @@
         </g>
       </g>
       <g
-         id="g5842">
-        <g
-           clip-path="url(#clipPath5848)"
-           id="g5844">
-          <text
-             id="text5852"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,239.59,76.32)">
-            <tspan
-               id="tspan5850"
-               y="0"
-               x="0">0</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g5854">
+         id="g5854"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5860)"
            id="g5856">
@@ -4326,19 +4050,8 @@
         </g>
       </g>
       <g
-         id="g5870">
-        <g
-           clip-path="url(#clipPath5876)"
-           id="g5872">
-          <path
-             inkscape:connector-curvature="0"
-             id="path5878"
-             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             d="m 97.45,210.35 h 178.2 V 324 H 97.45 Z" />
-        </g>
-      </g>
-      <g
-         id="g5880">
+         id="g5880"
+         style="display:inline">
         <g
            clip-path="url(#clipPath5886)"
            id="g5882">
@@ -4350,26 +4063,28 @@
                sodipodi:role="line"
                id="tspan6200"
                x="0"
-               y="0">d) Framework Model (h_law)</tspan>
+               y="0"
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:15.10856819px;font-family:Calibri;-inkscape-font-specification:'Calibri Bold'">d) Framework Model (h_law)</tspan>
           </text>
         </g>
       </g>
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="11.150297"
-       y="17.155363"
-       id="text6206"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556488px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458365"
+       x="11.232233"
+       y="40.635548"
+       id="text6206"
+       transform="scale(1.0000013,0.99999871)"><tspan
          sodipodi:role="line"
          id="tspan6204"
-         x="11.150297"
-         y="17.155363"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.3499999px;line-height:2;font-family:Calibri;-inkscape-font-specification:'Calibri Italic';stroke-width:0.26458332">Figure 1</tspan><tspan
+         x="11.232233"
+         y="40.635548"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333979px;line-height:2;font-family:Calibri;-inkscape-font-specification:'Calibri Italic';stroke-width:0.26458365">Figure 1</tspan><tspan
          sodipodi:role="line"
-         x="11.150297"
-         y="29.855362"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:2;font-family:Calibri;-inkscape-font-specification:'Calibri Italic';stroke-width:0.26458332"
+         x="11.232233"
+         y="50.29829"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333979px;line-height:2;font-family:Calibri;-inkscape-font-specification:'Calibri Italic';stroke-width:0.26458365"
          id="tspan6212">Testing Performance of Models (10 aggregated resamples)</tspan></text>
   </g>
 </svg>

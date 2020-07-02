@@ -197,13 +197,13 @@ cases.law.tree$plot(filename = "cases-law-tree-plot.pdf")
 ```
 
 ```{r}
-message("h_viol model: \n")
+message("h_viol model:")
 cases.viol.tree$describe()
-message("\n h_force model: \n")
+message("\n h_force model:")
 cases.force.tree$describe()
-message("\n h_operation model: \n")
+message("\n h_operation model:")
 cases.op.tree$describe()
-message("\n h_law model: \n")
+message("\n h_law model:")
 cases.law.tree$describe()
 ```
 
@@ -214,7 +214,7 @@ After running the models, we would now like to extract the respective informatio
 * Specificity
 * Precision (positive predictive value)
 * Negative predictive value
-* Gamma $\gamma$ ($= \frac{\lambda}{1 + \lambda}$)
+* Gamma ($\gamma = \frac{\lambda}{1 + \lambda}$)
 
 Extracting the evaluation measures:
 
@@ -222,14 +222,19 @@ Extracting the evaluation measures:
 cases.viol.tree$error.test.repeats
 data.frame("sensitivity_ci" = binom.test(53, 61)$conf.int, #Couldn't find way to extract values
            "specificity_ci" = binom.test(13, 16)$conf.int,
-           "bacc_ci" = binom.test(round(cases.viol.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int) # %>% 
-  # mutate(bacc_ci2 = 
-  #          cases.viol.tree$error.test.repeats$`Balanced Accuracy` - 1.96 *
-  #          sqrt((
-  #              (first(sensitivity_ci) - last(sensitivity_ci) / (2 * 1.96))^2 +
-  #              (first(specificity_ci) - last(specificity_ci) / (2 * 1.96))^2
-  #            ) / 4)
-  #          / sqrt(10))
+           "bacc_ci" = binom.test(round(cases.viol.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int)  %>% 
+  #Alternative means of calculating BACC CI by using normal distribution (but upper bound >1)
+  mutate(lower_ci = row_number(sensitivity_ci) %% 2 == 1,
+         bacc_err = 1.96 *
+           sqrt((
+               (first(sensitivity_ci) - last(sensitivity_ci) / (2 * 1.96))^2 +
+               (first(specificity_ci) - last(specificity_ci) / (2 * 1.96))^2
+             ) / 4)
+           / sqrt(10),
+         bacc_ci_normal = ifelse((lower_ci == 1), #Use normal instead of binomial distribution
+           cases.viol.tree$error.test.repeats$`Balanced Accuracy` - bacc_err,
+           cases.viol.tree$error.test.repeats$`Balanced Accuracy` + bacc_err)) %>% 
+  select(-bacc_err)
 ```
 
 ```{r}
@@ -334,6 +339,13 @@ grViz("cases-viol-tree-graph.gv") %>%
 
 
 # Experiments
+
+```{r}
+#Repeat with all of them?
+cases_test.tree <- cbind(cases$respondent, cases$year, cases$gc_dec, cases.viol) %>% s.ADDTREE(gamma = 0.4, learning.rate = 0.001, seed = 2020)
+dplot3.addtree(cases_test.tree, fontname = "calibri")
+```
+
 
 ```{r}
 cases_test <- elevate(cases.viol, mod = "addtree",

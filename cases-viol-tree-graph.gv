@@ -16,6 +16,7 @@ strict digraph cases_viol_tree_graph {
         
   // Inner nodes
   all [label = "All cases \n N = 77, 79%"]
+
   o_predict1 [label = <<i>Did they predict and plan for all <br/> reasonably foreseeable developments?</i> <br/>
   Yes or uncertain (o_predict: 1, 2, -88, -99) <br/>
   N = 37, 57%>]
@@ -23,9 +24,11 @@ strict digraph cases_viol_tree_graph {
   //Positive leaf nodes
   node [fillcolor = "#F48024DD",
         color = "#F48024DD"]
+        
     o_predict2 [label = <<i>Did they predict and plan for all <br/> reasonably foreseeable developments?</i> <br/>
     No (o_predict: 0) <br/>
     N = 40, 100%>]
+    
     precip_act2 [label = <<i>Was the situation such that <br/> precipitate action was required?</i> <br/>
     No or uncertain (precip_act: 0, -88) <br/>
     N = 16, 94%>]
@@ -33,6 +36,7 @@ strict digraph cases_viol_tree_graph {
   // Negative leaf nodes
   node [fillcolor = "#18A3ACDD",
         color = "#18A3ACDD"]
+        
   precip_act1 [label = <<i>Was the situation such that <br/> precipitate action was required?</i> <br/>
     Yes (precip_act: 1) <br/>
     N = 21, 29%>]
@@ -40,6 +44,7 @@ strict digraph cases_viol_tree_graph {
   //Edges
   edge [color = dimgray,
         arrowhead = vee]
+        
   all -> { o_predict1, o_predict2}
   o_predict1 -> { precip_act1, precip_act2}
 }

@@ -9,7 +9,7 @@ Installing `rtemis`, a library for advanced machine learning which used here for
 ```{r eval=FALSE}
 install.packages("remotes")
 remotes::install_github("egenn/rtemis")
-install.packages(c("e1071", "gbm", "glmnet", "pbapply", "plyr", "ranger", "rpart", "data.tree", "DiagrammeR", "missRanger", "plotly", "DiagrammeRsvg", "rsvg")) #Additional dependencies
+install.packages(c("e1071", "gbm", "glmnet", "pbapply", "plyr", "ranger", "rpart", "data.tree", "DiagrammeR", "missRanger", "plotly", "DiagrammeRsvg", "rsvg", "svglite", "extrafont")) #Additional dependencies
 ```
 
 
@@ -20,6 +20,14 @@ library(DiagrammeR)
 #Loaded sparately to export the plots
 library(DiagrammeRsvg)
 library(rsvg)
+```
+
+To use Calibri:
+
+```{r message=FALSE, warning=FALSE}
+library(extrafont)
+font_import(pattern = "calibri", prompt = FALSE) #Somewhat system-specific
+loadfonts(device = "win")
 ```
 
 # Pilot
@@ -136,6 +144,64 @@ cases.law <- cases %>%
   mutate(h_law = recode(h_law, `0` = 0, `1` = 0, `-88` = 0, `2`= 1)) %>% 
   mutate(h_law = factor(h_law, levels = c(1, 0)))
 ```
+
+Getting a graphic overview over the outcome variables. First, we need to transform the dataset into a long format with the old values and recodes next to each other.
+
+```{r}
+casesDV.norecode <- data.frame(
+  h_viol = recode(cases$h_viol, `1` = "2", `0` = "0"),
+  h_force = cases$h_force,
+  h_operation = cases$h_operation,
+  h_law = cases$h_law
+) %>% 
+  mutate(ID = row_number()) %>% 
+  pivot_longer(cols = h_viol:h_law, names_to = "obligation", values_to = "decision")
+
+casesDV.recoded <- data.frame(
+  h_viol = cases.viol$h_viol,
+  h_force = cases.force$h_force,
+  h_operation = cases.op$h_operation,
+  h_law = cases.law$h_law
+) %>% 
+  mutate(ID = row_number()) %>% 
+  pivot_longer(cols = h_viol:h_law, names_to = "obligation", values_to = "recoded_dec")
+
+casesDV <- left_join(casesDV.norecode, casesDV.recoded) %>% 
+  mutate(decision = factor(decision, levels = c("-88", "0", "1", "2"), ordered = TRUE),
+         recoded_dec = factor(recoded_dec, levels = c("0", "1"), ordered = TRUE))
+```
+
+```{r}
+
+plot.summary.violations <- ggplot(data = casesDV) +
+  geom_bar(mapping = aes(x = obligation, fill = decision)) +
+  geom_bar(mapping = aes(x = obligation, color = recoded_dec), size = 1.3, alpha = 0) +
+  scale_color_manual(values = c("#18A3ACDD", "#F48024DD"),
+                     labels = c("No violation", "Violation")) + 
+  #scale_fill_viridis_d(option = "magma") +
+  #scale_fill_brewer(palette = "Purples") +
+  scale_fill_grey(labels = c("Uncertain (-88)", "Unrelated (0)", "No violation (1)", "Violation (2)")) +
+  scale_x_discrete(labels = c("Use of force", "Framework", "Operation", "Article 2")) +
+  labs(title = "Figure 1",
+       subtitle = "Distribution of the Values of the Outcome Variables",
+       x = "Assessed obligation",
+       y = "Number of cases",
+       color = "Decision tree",
+       fill = "Coding scheme") +
+  theme_light(base_family = "Calibri",
+              base_size = 12) +
+  theme(plot.title = element_text(size = 12, face = "bold", 
+                                  margin = margin(b = 12)),
+        plot.subtitle = element_text(face =  "italic", 
+                                     margin = margin(b = 12)),
+        axis.title.x = element_text(margin = margin(t = 12)),
+        axis.title.y = element_text(margin = margin(r = 12)))
+
+ggsave(plot = plot.summary.violations, 
+       "figure-summary-violations-obligations.png", 
+       width = 160, height = 120, units = "mm")
+```
+
 
 # Using Decision Trees
 
@@ -412,7 +478,7 @@ checkData(cases_test2)
 
 cases_test.tree <- s.ADDTREE(cases_test, gamma = 0.5, learning.rate = 0.0001, upsample = TRUE)
 dplot3.addtree(cases_test.tree)
-print(cases_test.tree$mod$addtree.pruned, "Estimate")
+print(cases_test.tree$mod$addtree.pruned, "Estimate", "N")
 
 #With testing
 res <- resample(cases_test, n.resamples = 10, resampler = "kfold")

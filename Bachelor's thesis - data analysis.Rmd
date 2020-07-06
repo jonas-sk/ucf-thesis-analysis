@@ -65,7 +65,7 @@ pilot_subset %>%
 
 ---
 
-# Tidying the Final Dataset
+# Tidying and Preparing the Final Datasets
 
 Importing the Excel coded cases dataset:
 
@@ -96,34 +96,6 @@ cases <- cases_raw %>%
 cases <- cbind(select(cases_raw, ID:respondent), cases)
 ```
 
-# Collapsing Variables and Categories
-
-```{r}
-IVcases <- cases %>% select(scrutiny:l_train) #Only want to analyze and reduce the IVs
-```
-
-Checking if there are any superfluous levels.
-
-```{r}
-IVcases %>% sapply(table)
-IVcases %>% sapply(table) %>% sapply(prop.table)
-```
-
-There are multiple methods possible to achieve this. Principally, these can be divided into factor analysis and principal component analysis (PCA). Both have variations that are compatible with categorical data. I pick PCA here because, conceptually, it focuses on reducing the number of dimensions (variables) while factor analysis is focused on uncovering latent factors. Within the realm of non-linear PCA, I picked multiple factor analysis (MFA) because it is well suited for grouped data (like in my case)
-
-```{r}
-library(FactoMineR)
-library(factoextra)
-
-
-MFAcases <- MFA(IVcases, group = c(6, 14, 5, 11, 3), #Groups based on coding form
-                type = rep("n", 5), 
-                name.group = c("assessment", "exceptions", "force", "operation", "law"))
-```
-
-Using Chi-square and Cramer's V to find relations of dependence between the cateogrical variables
-
-# Preparing for the Use of Decision Trees
 
 Create the datasets for each of our four outcome variables. This involves putting the outcome variable as last column and recoding the factor such that the "positive" outcome (i.e. a violation) is the first level of the factor. Furthermore, the three other outcome variables are turned into binomial variables with one positive (violation) level and one negative (no violation, not related or uncertain) level. 
 
@@ -144,6 +116,8 @@ cases.law <- cases %>%
   mutate(h_law = recode(h_law, `0` = 0, `1` = 0, `-88` = 0, `2`= 1)) %>% 
   mutate(h_law = factor(h_law, levels = c(1, 0)))
 ```
+
+# Summary Statistics
 
 Getting a graphic overview over the outcome variables. First, we need to transform the dataset into a long format with the old values and recodes next to each other.
 
@@ -205,9 +179,9 @@ ggsave(plot = plot.summary.violations,
 
 # Using Decision Trees
 
-## Model Selection and Assessment
+## Training the Models
 
-Perform a nested cross-validation for hyperparameter tuning (model selection) and model assessment. A 10-fold cross-validation is performed to test model generalizability. Within each resample, another 10-fold cross-validation is performed to tune the gamma hyperparameter between four different options. In total, 1600 models are thus run. 
+Perform a 10-fold nested cross-validation for hyperparameter tuning (model selection) and model assessment. A 10-fold cross-validation is performed to test model generalizability. Within each resample, another 10-fold cross-validation is performed to tune the gamma hyperparameter between four different options. In total, 1600 models are thus run. 
 
 ```{r eval=FALSE}
 cases.viol.tree <- elevate(cases.viol, mod = "addtree",
@@ -272,6 +246,8 @@ cases.op.tree$describe()
 message("\n h_law model:")
 cases.law.tree$describe()
 ```
+
+## Model Assessment and Results of Model Selection
 
 After running the models, we would now like to extract the respective information. This encompasses the values in the list below, which includes the  aggregated values of the evaluation measures and the hyperparameters picked.
 
@@ -343,7 +319,6 @@ cases.law.tree$parameters$best.tune$elevate.ADDTREE.repeat1 %>% summarize(mean(g
 Based on the median hyperparameter, I pick $\gamma = 0.4$ for every model but `h_operation` for which I choose $\gamma = 0.7$ for the full model.
 
 ## Full Models for Prediction and Visualization
-
 
 Full model for `h_viol`:
 

@@ -172,7 +172,7 @@ plot.summary.violations <- ggplot(data = casesDV) +
         axis.title.y = element_text(margin = margin(r = 12)))
 
 ggsave(plot = plot.summary.violations, 
-       "figure-summary-violations-obligations.png", 
+       "figures/figure-summary-violations-obligations.png", 
        width = 160, height = 120, units = "mm")
 ```
 
@@ -190,7 +190,7 @@ cases.viol.tree <- elevate(cases.viol, mod = "addtree",
                            gamma = c(0.1, 0.3, 0.5, 0.7, 0.9),
                            learning.rate = 0.001,
                            seed = 2020)
-saveRDS(cases.viol.tree, "cases-viol-tree.rds")
+saveRDS(cases.viol.tree, "models/cases-viol-tree.rds")
 
 cases.force.tree <- elevate(cases.force, mod = "addtree",
                            resampler = "kfold", n.resamples = 10,
@@ -198,7 +198,7 @@ cases.force.tree <- elevate(cases.force, mod = "addtree",
                            gamma = c(0.1, 0.3, 0.5, 0.7, 0.9),
                            learning.rate = 0.001,
                            seed = 2020)
-saveRDS(cases.force.tree, "cases-force-tree.rds")
+saveRDS(cases.force.tree, "models/cases-force-tree.rds")
 
 cases.op.tree <- elevate(cases.op, mod = "addtree",
                            resampler = "kfold", n.resamples = 10,
@@ -206,7 +206,7 @@ cases.op.tree <- elevate(cases.op, mod = "addtree",
                            gamma = c(0.1, 0.3, 0.5, 0.7, 0.9),
                            learning.rate = 0.001,
                            seed = 2020)
-saveRDS(cases.op.tree, "cases-op-tree.rds")
+saveRDS(cases.op.tree, "models/cases-op-tree.rds")
 
 cases.law.tree <- elevate(cases.law, mod = "addtree",
                            resampler = "kfold", n.resamples = 10,
@@ -214,26 +214,26 @@ cases.law.tree <- elevate(cases.law, mod = "addtree",
                            gamma = c(0.1, 0.3, 0.5, 0.7, 0.9),
                            learning.rate = 0.001,
                            seed = 2020)
-saveRDS(cases.law.tree, "cases-law-tree.rds")
+saveRDS(cases.law.tree, "models/cases-law-tree.rds")
 
 ```
 
 Read the AddTrees in from the saved file because re-executing the model run for knitting is too computationally expensive:
 
 ```{r}
-cases.viol.tree <- readRDS("cases-viol-tree.rds")
-cases.force.tree <- readRDS("cases-force-tree.rds")
-cases.op.tree <- readRDS("cases-op-tree.rds")
-cases.law.tree <- readRDS("cases-law-tree.rds")
+cases.viol.tree <- readRDS("models/cases-viol-tree.rds")
+cases.force.tree <- readRDS("models/cases-force-tree.rds")
+cases.op.tree <- readRDS("models/cases-op-tree.rds")
+cases.law.tree <- readRDS("models/cases-law-tree.rds")
 ```
 
 Getting some visual summaries for the model assessment: 
 
 ```{r}
-cases.viol.tree$plot(filename = "cases-viol-tree-plot.pdf")
-cases.force.tree$plot(filename = "cases-force-tree-plot.pdf")
-cases.op.tree$plot(filename = "cases-op-tree-plot.pdf")
-cases.law.tree$plot(filename = "cases-law-tree-plot.pdf")
+cases.viol.tree$plot(filename = "graphs/cases-viol-tree-plot.pdf")
+cases.force.tree$plot(filename = "graphs/cases-force-tree-plot.pdf")
+cases.op.tree$plot(filename = "graphs/cases-op-tree-plot.pdf")
+cases.law.tree$plot(filename = "graphs/cases-law-tree-plot.pdf")
 ```
 
 ```{r}
@@ -324,48 +324,48 @@ Full model for `h_viol`:
 
 ```{r}
 cases.viol.tree.full <- s.ADDTREE(cases.viol, gamma = 0.4, learning.rate = 0.001, seed = 2020)
-saveRDS(cases.viol.tree.full, "cases-viol-tree-full.rds")
+saveRDS(cases.viol.tree.full, "models/cases-viol-tree-full.rds")
 
 cases.viol.tree.full.viz <- dplot3.addtree(cases.viol.tree.full, fontname = "calibri")
 cases.viol.tree.full.viz %>% 
   export_svg() %>% charToRaw() %>% 
-  rsvg_svg(file = "cases-viol-tree-generated.svg")
+  rsvg_svg(file = "graphs/cases-viol-tree-generated.svg")
 ```
 
 Full model for `h_force`:
 
 ```{r}
 cases.force.tree.full <- s.ADDTREE(cases.force, gamma = 0.4, learning.rate = 0.001, seed = 2020)
-saveRDS(cases.force.tree.full, "cases-force-tree-full.rds")
+saveRDS(cases.force.tree.full, "models/cases-force-tree-full.rds")
 
 cases.force.tree.full.viz <- dplot3.addtree(cases.force.tree.full, fontname = "calibri")
 cases.force.tree.full.viz %>% 
   export_svg() %>% charToRaw() %>% 
-  rsvg_svg(file = "cases-force-tree-generated.svg")
+  rsvg_svg(file = "graphs/cases-force-tree-generated.svg")
 ```
 
 Full model for `h_operation`:
 
 ```{r}
 cases.op.tree.full <- s.ADDTREE(cases.op, gamma = 0.4, learning.rate = 0.001, seed = 2020)
-saveRDS(cases.op.tree.full, "cases-op-tree-full.rds")
+saveRDS(cases.op.tree.full, "models/cases-op-tree-full.rds")
 
 cases.op.tree.full.viz <- dplot3.addtree(cases.op.tree.full, fontname = "calibri")
 cases.op.tree.full.viz %>% 
   export_svg() %>% charToRaw() %>% 
-  rsvg_svg(file = "cases-op-tree-generated.svg")
+  rsvg_svg(file = "graphs/cases-op-tree-generated.svg")
 ```
 
 Full model for `h_law`:
 
 ```{r}
 cases.law.tree.full <- s.ADDTREE(cases.law, gamma = 0.4, learning.rate = 0.001, seed = 2020)
-saveRDS(cases.law.tree.full, "cases-law-tree-full.rds")
+saveRDS(cases.law.tree.full, "models/cases-law-tree-full.rds")
 
 cases.law.tree.full.viz <- dplot3.addtree(cases.law.tree.full, fontname = "calibri")
 cases.law.tree.full.viz %>% 
   export_svg() %>% charToRaw() %>% 
-  rsvg_svg(file = "cases-law-tree-generated.svg")
+  rsvg_svg(file = "graphs/cases-law-tree-generated.svg")
 ```
 
 ### Manually reconstructing trees for higher legibility
@@ -373,27 +373,27 @@ cases.law.tree.full.viz %>%
 The DiagrammeR library is used and the original layout and style is recreated but with better labels
 
 ```{r}
-grViz("cases-viol-tree-graph.gv") %>% 
+grViz("graphs/cases-viol-tree-graph.gv") %>% 
   export_svg() %>% charToRaw() %>% 
-  rsvg_svg(file = "cases-viol-tree-graph.svg")
+  rsvg_svg(file = "graphs/cases-viol-tree-graph.svg")
 ```
 
 ```{r}
-grViz("cases-force-tree-graph.gv") %>% 
+grViz("graphs/cases-force-tree-graph.gv") %>% 
   export_svg() %>% charToRaw() %>% 
-  rsvg_svg(file = "cases-force-tree-graph.svg")
+  rsvg_svg(file = "graphs/cases-force-tree-graph.svg")
 ```
 
 ```{r}
-grViz("cases-op-tree-graph.gv") %>% 
+grViz("graphs/cases-op-tree-graph.gv") %>% 
   export_svg() %>% charToRaw() %>% 
-  rsvg_svg(file = "cases-op-tree-graph.svg")
+  rsvg_svg(file = "graphs/cases-op-tree-graph.svg")
 ```
 
 ```{r}
-grViz("cases-law-tree-graph.gv") %>% 
+grViz("graphs/cases-law-tree-graph.gv") %>% 
   export_svg() %>% charToRaw() %>% 
-  rsvg_svg(file = "cases-law-tree-graph.svg")
+  rsvg_svg(file = "graphs/cases-law-tree-graph.svg")
 ```
 
 # Experiments

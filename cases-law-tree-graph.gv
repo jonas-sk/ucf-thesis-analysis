@@ -1,0 +1,42 @@
+strict digraph cases_law_tree_graph {
+  graph [fontname = calibri, 
+        fontsize = 12,
+        splines = polyline,
+        layout = dot,
+        overlap = false]
+  
+  #All nodes
+  node [shape = box,
+        style = filled,
+        fontname = calibri, 
+        fontsize = 12,
+        fontcolor = white,
+        fillcolor = "#666666",
+        color = "#666666"]
+        
+  // Inner nodes
+  all [label = "All cases \n N = 77, 18%"]
+  
+  //Positive leaf nodes
+  node [fillcolor = "#F48024DD",
+        color = "#F48024DD"]
+        
+  l_clear2 [label = <<i>Are the UoF guidelines clear <br/> and sufficiently detailed?</i> <br/>
+    No (l_clear: 0) <br/>
+    N = 17, 71%>]
+    
+  
+  // Negative leaf nodes
+  node [fillcolor = "#18A3ACDD",
+        color = "#18A3ACDD"]
+        
+  l_clear1 [label = <<i>Are the UoF guidelines clear <br/> and sufficiently detailed?</i> <br/>
+    Yes or inapplicable (l_clear: 1, -88, -99) <br/>
+    N = 60, 3%>]
+  
+  //Edges
+  edge [color = dimgray,
+        arrowhead = normal]
+        
+  all -> { l_clear1, l_clear2}
+}

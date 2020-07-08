@@ -378,6 +378,23 @@ grViz("cases-viol-tree-graph.gv") %>%
   rsvg_svg(file = "cases-viol-tree-graph.svg")
 ```
 
+```{r}
+grViz("cases-force-tree-graph.gv") %>% 
+  export_svg() %>% charToRaw() %>% 
+  rsvg_svg(file = "cases-force-tree-graph.svg")
+```
+
+```{r}
+grViz("cases-op-tree-graph.gv") %>% 
+  export_svg() %>% charToRaw() %>% 
+  rsvg_svg(file = "cases-op-tree-graph.svg")
+```
+
+```{r}
+grViz("cases-law-tree-graph.gv") %>% 
+  export_svg() %>% charToRaw() %>% 
+  rsvg_svg(file = "cases-law-tree-graph.svg")
+```
 
 # Experiments
 

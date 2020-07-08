@@ -1,0 +1,113 @@
+strict digraph cases_op_tree_graph {
+  graph [fontname = calibri, 
+        fontsize = 12,
+        splines = polyline,
+        layout = dot,
+        overlap = false]
+  
+  #All nodes
+  node [shape = box,
+        style = filled,
+        fontname = calibri, 
+        fontsize = 12,
+        fontcolor = white,
+        fillcolor = "#666666",
+        color = "#666666",
+        group = decision]
+  
+  //////////////      
+  // Inner nodes
+  all [label = "All cases \n N = 77, 56%"]
+  
+  o_predict1 [label = <<i>Did they predict and plan for <br/> foreseeable developments?</i> <br/>
+    Yes or inapplicable <br/> (o_predict: 1, 2, -99) <br/>
+    N = 32, 22%>]
+  
+  o_predict2 [label = <<i>Did they predict and plan for <br/> foreseeable developments?</i> <br/>
+    No or uncertain <br/> (o_predict: 0, -88) <br/>
+    N = 45, 80%>]
+
+  o_time2 [label = <<i>Did they have adequate time <br/> to prepare the operation?</i> <br/>
+    Yes or uncertain <br/> (o_time: 1, -88) <br/>
+    N = 15, 47%>]
+  
+  o_command1 [label = <<i>Was a clear chain of command <br/> maintained during the situation?</i> <br/>
+    Inapplicable <br/> (o_command: -99) <br/>
+    N = 13, 46%>]
+  
+  precip_act2 [label = <<i>Was the situation such that <br/> precipitate action was required?</i> <br/>
+    No or uncertain (precip_act: 0, -88) <br/>
+    N = 8, 75%>]
+  
+  o_command3 [label = <<i>Was a clear chain of command <br/> maintained during the situation?</i> <br/>
+    Yes or inapplicable <br/> (o_command: 2, -99) <br/>
+    N = 4, 50%>]
+  
+  o_justif1 [label = <<i>Did they justify any <br/> extraordinary means used?</i> <br/>
+    Yes or inapplicable <br/> (o_jutif: 1, -99) <br/>
+    N = 3, 33%>]
+  
+  /////////////////////
+  //Positive leaf nodes
+  node [fillcolor = "#F48024DD",
+        color = "#F48024DD",
+        group = leaf]
+  
+  o_command2 [label = <<i>Was a clear chain of command <br/> maintained during the situation?</i> <br/>
+    Yes, no or uncertain <br/> (o_command: 0, 1, 2, -88) <br/>
+    N = 32, 94%>]
+  
+  o_instr2 [label = <<i>Were they provided with specific <br/> and clear UoF instructions</i> <br/>
+    No <br/> (o_instr: 0) <br/>
+    N = 2, 100%>]
+  
+  o_command4 [label = <<i>Was a clear chain of command <br/> maintained during the situation?</i> <br/>
+    No or uncertain <br/> (o_command: 0, 1, -88) <br/>
+    N = 4, 100%>]
+    
+  o_justif2 [label = <<i>Did they justify any <br/> extraordinary means used?</i> <br/>
+    No or uncertain <br/> (o_jutif: 0, -88) <br/>
+    N = 1, 100%>]
+    
+  o_negot2 [label = <<i>Did they negotiate with <br/> the perpetrators?</i> <br/>
+    No or uncertain <br/> (o_negot: 0, -88) <br/>
+    N = 1, 100%>]
+    
+  //////////////////////
+  // Negative leaf nodes
+  node [fillcolor = "#18A3ACDD",
+        color = "#18A3ACDD",
+        group = leaf]
+        
+  o_time1 [label = <<i>Did they have adequate time <br/> to prepare the operation?</i> <br/>
+    No or inapplicable <br/> (o_time: 0, -99) <br/>
+    N = 17, 0%>]
+  
+  precip_act1 [label = <<i>Was the situation such that <br/> precipitate action was required?</i> <br/>
+    Yes (precip_act: 1) <br/>
+    N = 7, 14%>]
+    
+  o_instr1 [label = <<i>Were they provided with specific <br/> and clear UoF instructions?</i> <br/>
+    Yes or inapplicable <br/> (o_instr: 1, -88, -99) <br/>
+    N = 11, 36%>]
+    
+  o_negot1 [label = <<i>Did they negotiate with <br/> the perpetrators?</i> <br/>
+    Yes or inapplicable <br/> (o_negot: 1, -99) <br/>
+    N = 2, 0%>]
+    
+  //Edges
+  edge [color = dimgray,
+        arrowhead = normal]
+        
+  all -> { o_predict1, o_predict2 }
+  o_predict2 -> { o_command1, o_command2 }
+  o_command1 -> { o_instr1, o_instr2 }
+  
+  o_predict1 -> { o_time1, o_time2 }
+  o_time2 -> { precip_act1, precip_act2 }
+  precip_act2 -> { o_command3, o_command4 }
+  o_command3 -> { o_justif1, o_justif2 }
+  o_justif1 -> { o_negot1, o_negot2 }
+  
+  o_command1 -> o_predict1 [style=invis] #Consider removing
+}

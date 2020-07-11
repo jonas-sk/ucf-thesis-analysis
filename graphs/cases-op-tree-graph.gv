@@ -109,5 +109,5 @@ strict digraph cases_op_tree_graph {
   o_command3 -> { o_justif1, o_justif2 }
   o_justif1 -> { o_negot1, o_negot2 }
   
-  o_command1 -> o_predict1 [style=invis] #Consider removing
+  o_command1 -> o_predict1 [style=invis]
 }

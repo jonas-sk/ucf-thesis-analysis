@@ -23,7 +23,7 @@ strict digraph cases_force_tree_graph {
   N = 45, 27%>]
   
   threat4 [label = <<i>Was there a peceived <br/> threat to life?</i> <br/>
-  No or to State agents <br/> (threat: 2, 0, -88) <br/>
+  To State agents only <br/> (threat: 2, 0, -88) <br/>
   N = 22, 45%>]
   
   precip_act2 [label = <<i>Was the situation such that <br/> precipitate action was required?</i> <br/>

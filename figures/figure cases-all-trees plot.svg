@@ -15,8 +15,8 @@
    version="1.1"
    id="svg2361"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="cases-all-trees-plot.svg"
-   inkscape:export-filename="C:\Users\Jonas\Documents\Studium\Bachelor's Thesis\ucf-thesis-analysis\cases-all-trees-plot.png"
+   sodipodi:docname="figure cases-all-trees plot.svg"
+   inkscape:export-filename="C:\Users\Jonas\Documents\Studium\Bachelor's Thesis\ucf-thesis-analysis\figures\figure cases-all-trees plot.png"
    inkscape:export-xdpi="450"
    inkscape:export-ydpi="450">
   <defs
@@ -1406,17 +1406,17 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="100.42565"
-     inkscape:cy="390.37924"
+     inkscape:cx="37.665916"
+     inkscape:cy="368.41994"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      showguides="false"
      inkscape:guide-bbox="true"
-     inkscape:window-width="2400"
-     inkscape:window-height="1284"
+     inkscape:window-width="1920"
+     inkscape:window-height="1013"
      inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-y="1341"
      inkscape:window-maximized="1"
      inkscape:snap-text-baseline="true"
      inkscape:snap-bbox="true"
@@ -1512,7 +1512,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1522,7 +1522,7 @@
      id="layer1"
      transform="translate(-11.523703,-38.524647)">
     <g
-       transform="matrix(0.28019421,0,0,-0.28019421,2.6195471,144.0527)"
+       transform="matrix(0.28019421,0,0,-0.28019421,2.4491503,144.0527)"
        inkscape:label="cases-viol-tree-plot"
        id="g2914">
       <g
@@ -1848,7 +1848,7 @@
       </g>
       <g
          id="g3336"
-         style="display:inline">
+         style="display:none">
         <g
            clip-path="url(#clipPath3342)"
            id="g3338">
@@ -1861,7 +1861,7 @@
       </g>
       <g
          id="g3362"
-         style="display:inline">
+         style="display:none">
         <g
            clip-path="url(#clipPath3368)"
            id="g3364">
@@ -1889,7 +1889,7 @@
       </g>
       <g
          id="g3378"
-         style="display:inline">
+         style="display:none">
         <g
            clip-path="url(#clipPath3384)"
            id="g3380">
@@ -1902,7 +1902,7 @@
       </g>
       <g
          id="g3400"
-         style="display:inline">
+         style="display:none">
         <g
            clip-path="url(#clipPath3406)"
            id="g3402">
@@ -1948,7 +1948,7 @@
       </g>
     </g>
     <g
-       transform="matrix(0.28019421,0,0,-0.28019421,87.619547,144.0527)"
+       transform="matrix(0.28019421,0,0,-0.28019421,82.44915,144.0527)"
        inkscape:label="cases-force-tree-plot"
        id="g3728">
       <g
@@ -2272,7 +2272,7 @@
       <g
          id="g4150"
          transform="matrix(-1,0,0,1,569.45,0)"
-         style="display:inline">
+         style="display:none">
         <g
            clip-path="url(#clipPath4156)"
            id="g4152">
@@ -2284,7 +2284,8 @@
         </g>
       </g>
       <g
-         id="g4176">
+         id="g4176"
+         style="display:none">
         <g
            clip-path="url(#clipPath4182)"
            id="g4178">
@@ -2311,7 +2312,8 @@
         </g>
       </g>
       <g
-         id="g4192">
+         id="g4192"
+         style="display:none">
         <g
            clip-path="url(#clipPath4198)"
            id="g4194">
@@ -2323,7 +2325,8 @@
         </g>
       </g>
       <g
-         id="g4214">
+         id="g4214"
+         style="display:none">
         <g
            clip-path="url(#clipPath4220)"
            id="g4216">
@@ -2369,7 +2372,7 @@
       </g>
     </g>
     <g
-       transform="matrix(0.28019421,0,0,-0.28019421,2.6195469,237.09531)"
+       transform="matrix(0.28019421,0,0,-0.28019421,2.4491503,237.09531)"
        inkscape:label="cases-op-tree-plot"
        id="g4548">
       <g
@@ -2956,7 +2959,8 @@
         </g>
       </g>
       <g
-         id="g4970">
+         id="g4970"
+         style="display:none">
         <g
            clip-path="url(#clipPath4976)"
            id="g4972">
@@ -2968,32 +2972,8 @@
         </g>
       </g>
       <g
-         id="g4980">
-        <g
-           clip-path="url(#clipPath4986)"
-           id="g4982">
-          <text
-             id="text4990"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,282.5,91.52)">
-            <tspan
-               id="tspan4988"
-               y="0"
-               x="0">0</tspan>
-          </text>
-          <text
-             id="text4994"
-             style="font-variant:normal;font-weight:normal;font-size:8px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(0,1,1,0,239.59,174.5)">
-            <tspan
-               id="tspan4992"
-               y="0"
-               x="0">0</tspan>
-          </text>
-        </g>
-      </g>
-      <g
-         id="g4996">
+         id="g4996"
+         style="display:none">
         <g
            clip-path="url(#clipPath5002)"
            id="g4998">
@@ -3020,7 +3000,8 @@
         </g>
       </g>
       <g
-         id="g5012">
+         id="g5012"
+         style="display:none">
         <g
            clip-path="url(#clipPath5018)"
            id="g5014">
@@ -3032,7 +3013,8 @@
         </g>
       </g>
       <g
-         id="g5022">
+         id="g5022"
+         style="display:none">
         <g
            clip-path="url(#clipPath5028)"
            id="g5024">
@@ -3048,7 +3030,8 @@
         </g>
       </g>
       <g
-         id="g5034">
+         id="g5034"
+         style="display:none">
         <g
            clip-path="url(#clipPath5040)"
            id="g5036">
@@ -3094,7 +3077,7 @@
       </g>
     </g>
     <g
-       transform="matrix(0.28019421,0,0,-0.28019421,87.619547,237.09531)"
+       transform="matrix(0.28019421,0,0,-0.28019421,82.44915,237.09531)"
        inkscape:label="cases-law-tree-plot"
        id="g5368"
        style="display:inline">
@@ -3454,7 +3437,7 @@
       </g>
       <g
          id="g5790"
-         style="display:inline">
+         style="display:none">
         <g
            clip-path="url(#clipPath5796)"
            id="g5792">
@@ -3467,7 +3450,7 @@
       </g>
       <g
          id="g5816"
-         style="display:inline">
+         style="display:none">
         <g
            clip-path="url(#clipPath5822)"
            id="g5818">
@@ -3495,7 +3478,7 @@
       </g>
       <g
          id="g5832"
-         style="display:inline">
+         style="display:none">
         <g
            clip-path="url(#clipPath5838)"
            id="g5834">
@@ -3508,7 +3491,7 @@
       </g>
       <g
          id="g5854"
-         style="display:inline">
+         style="display:none">
         <g
            clip-path="url(#clipPath5860)"
            id="g5856">
@@ -3565,11 +3548,22 @@
          id="tspan6204"
          x="11.630968"
          y="41.33176"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333311px;line-height:2;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458365">Figure 1</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333311px;line-height:2;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458365">Figure 3</tspan><tspan
          sodipodi:role="line"
          x="11.630968"
          y="50.994495"
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;line-height:2;font-family:Calibri;-inkscape-font-specification:'Calibri, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458365"
-         id="tspan6212">Aggregated Performance of Models in Predicting Violations in Test Data (10 resamples each)</tspan></text>
+         id="tspan6212">Aggregated Performance of Models in Predicting Violations in Test Data</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="15.652791"
+       y="56.806309"
+       id="text1631"
+       inkscape:label="returning changes"><tspan
+         sodipodi:role="line"
+         id="tspan1635"
+         x="15.652791"
+         y="56.806309">Changes to restore PPV &amp; NPV: make visible hidden layers, move on X from 80 to 85</tspan></text>
   </g>
 </svg>

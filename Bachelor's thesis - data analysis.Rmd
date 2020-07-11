@@ -172,7 +172,7 @@ plot.summary.violations <- ggplot(data = casesDV) +
         axis.title.y = element_text(margin = margin(r = 12)))
 
 ggsave(plot = plot.summary.violations, 
-       "figures/figure-summary-violations-obligations.png", 
+       "figures/figure summary-violations-obligations.png", 
        width = 160, height = 120, units = "mm")
 ```
 
@@ -251,53 +251,147 @@ cases.law.tree$describe()
 
 After running the models, we would now like to extract the respective information. This encompasses the values in the list below, which includes the  aggregated values of the evaluation measures and the hyperparameters picked.
 
-* Balanced Accuracy
+* Balanced accuracy
 * Sensitivity (recall)
 * Specificity
 * Precision (positive predictive value)
 * Negative predictive value
 * Gamma ($\gamma = \frac{\lambda}{1 + \lambda}$)
 
-Extracting the evaluation measures:
+### Calculating the Balanced Accuracy Confidence Interval
+
+To calculate the **confidence interval (CI) for sensitivity and specificity**, I am simply using `binom.test`, Because sensitivity and specificity can be seen as a success rate of a number of independent trials, they can be modeled by the binomial distribution and, therefore, we may take any method used to calculate the binomial proportion confidence interval here for the CIs, including the Clopper-Pearson method used in `binom.test`.
+
+To calculate the **confidence interval of balanced accuracy (BACC)**, we may approximate it using a normal confidence interval with a logit transformation because it is an aggregate proportion value. The general formula for a confidence interval is $(\mathrm{CI_{lower}}, \mathrm{CI_{upper}}) = \bar X \pm z * \frac{\sigma}{\sqrt{n}}$ with $\bar X$ being the mean (or other value we want to calculate the CI from), $z$ being the critical value of the distribution's quantile function for a certain probability (e.g. $0.975$ (one-sided) for a 95% CI (two-sided)), $\sigma$ being the standard deviation, and $n$ the sample size.
+
+The variances of sensitivity and specificity, as if they would be normally distributed, are first extracted from their respective CIs and then used to calculate the BACC variance following the approach to calculating the variance of an average: $\mathrm{Var}(\bar X) = \left(\frac{1}{n} \right) ^2 \left( \mathrm{Var}(X_1) + \mathrm{Var}(X_2) + \dots + \mathrm{Var}(X_n) \right)$. With logit defined as $\mathrm{logit}(p) = \mathrm{ln} \left( \frac{p}{1-p} \right)$, we can [approximate](https://stats.stackexchange.com/a/119770/206695) it using the normal distribution: 
+
+$$
+\ln\frac{p}{1-p} \sim_{\text{approx.}} N\left(\ln\frac{p}{1-p}, \frac 1{np(1-p)}\right)
+$$
+
+Here, $N$ is the normal distribution and the first value is the mean and the second value is the variance.
+
+Henceforth, the variance is calculated with
+$$
+\mathrm{Var(\bar X)} = \left(\frac{1}{np(1-p)} \right) ^2 \left( \mathrm{Var}(X_1) + \mathrm{Var}(X_2) + \dots + \mathrm{Var}(X_n) \right)
+$$
+
+Applied to our case, the formula for the variance is
+
+$$
+\mathrm{Var(bacc)} = \left(\frac{1}{np(1-p)} \right) ^2 \left( \mathrm{Var}(\mathrm{sens}) + \mathrm{Var}(\mathrm{spec}) \right)
+$$
+
+Thus, logit-transformed distribution of BACC is 
+$$
+\mathrm{logit}(\widehat{\mathrm{bacc}})\sim N\left(\mathrm{bacc}, \frac{\sigma_{sens}^2+\sigma_{spec}^2}{4\mathrm{bacc}^2(1-\mathrm{bacc})^2}\right)
+$$
+
+Henceforth, the **formula for the BACC CI** is the following:
+
+$$
+(\mathrm{CI_{lower}}, \mathrm{CI_{upper}}) = \mathrm{expit} \left( \mathrm{logit}(\mathrm{bacc}) \pm  z * \frac{\mathrm{logit}( \sigma_{\mathrm{bacc}} )}{\sqrt n} \right)
+$$
+
+, whereby the following applies:
+
+$$
+\mathrm{logit}(\sigma_{\mathrm{bacc}}) = \sqrt{ \frac{ \sigma_{\mathrm{sens}}^2 + \sigma_{\mathrm{spec}}^2 }{ 4 \mathrm{bacc}^2 (1 - \mathrm{bacc})^2 } }
+$$
+
+$$
+\sigma_{\mathrm{sens}}^2 = \left(  \frac{ \mathrm{CI_{sens_{lower}}} - \mathrm{CI_{sens_{upper}}} }{ 2 * 1.96 } \right)^2
+$$
+
+$$
+\sigma_{\mathrm{spec}}^2 = \left(  \frac{ \mathrm{CI_{spec_{lower}}} - \mathrm{CI_{spec_{upper}}} }{ 2 * 1.96 } \right)^2
+$$
+
+with $\mathrm{expit(x)}$ being the inverse logit function, $\sigma_{\mathrm{sens}}^2$ and $\sigma_{\mathrm{spec}}^2$ being the variance for sensitivity and specificity respectively, and $1.96$ being the critical $z$-value for a 95% confidence interval.
+
+### Extracting and Calculating the Metrics
+
+For each model, get the measures as well as their confidence intervals: 
 
 ```{r}
 cases.viol.tree$error.test.repeats
 data.frame("sensitivity_ci" = binom.test(53, 61)$conf.int, #Couldn't find way to extract values
-           "specificity_ci" = binom.test(13, 16)$conf.int,
-           "bacc_ci" = binom.test(round(cases.viol.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int)  %>% 
-  #Alternative means of calculating BACC CI by using normal distribution (but upper bound >1)
-  mutate(lower_ci = row_number(sensitivity_ci) %% 2 == 1,
-         bacc_err = 1.96 *
-           sqrt((
-               (first(sensitivity_ci) - last(sensitivity_ci) / (2 * 1.96))^2 +
-               (first(specificity_ci) - last(specificity_ci) / (2 * 1.96))^2
-             ) / 4)
-           / sqrt(10),
-         bacc_ci_normal = ifelse((lower_ci == 1), #Use normal instead of binomial distribution
-           cases.viol.tree$error.test.repeats$`Balanced Accuracy` - bacc_err,
-           cases.viol.tree$error.test.repeats$`Balanced Accuracy` + bacc_err)) %>% 
-  select(-bacc_err)
+           "specificity_ci" = binom.test(13, 16)$conf.int)  %>% 
+  #Calculate BACC CI by using normal distribution with logit transformation (see above)
+  mutate(lower_ci = row_number(sensitivity_ci) %% 2 == 1) %>% 
+  mutate(
+    sd_logit = sqrt(
+      ( ( (first(sensitivity_ci) - last(sensitivity_ci)) / (2 * 1.96) )^2 +
+         ((first(specificity_ci) - last(specificity_ci)) / (2 * 1.96))^2 )
+      / (4 * cases.viol.tree$error.test.repeats$`Balanced Accuracy`^2 * 
+         (1 - cases.viol.tree$error.test.repeats$`Balanced Accuracy`)^2) ),
+    bacc_err = 1.96 * sd_logit / sqrt(77), 
+    bacc_ci = 
+      ifelse((lower_ci == 1), 
+             invlogit(logit(cases.viol.tree$error.test.repeats$`Balanced Accuracy`) - bacc_err),
+             invlogit(logit(cases.viol.tree$error.test.repeats$`Balanced Accuracy`) + bacc_err))) %>% 
+  select(-bacc_err, -sd_logit)
 ```
 
 ```{r}
 cases.force.tree$error.test.repeats
 data.frame("sensitivity_ci" = binom.test(28, 38)$conf.int, #Couldn't find way to extract values
-           "specificity_ci" = binom.test(27, 39)$conf.int,
-           "bacc_ci" = binom.test(round(cases.force.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int)
+           "specificity_ci" = binom.test(27, 39)$conf.int) %>% 
+  #Calculate BACC CI by using normal distribution with logit transformation (see above)
+  mutate(lower_ci = row_number(sensitivity_ci) %% 2 == 1) %>% 
+  mutate(
+    sd_logit = sqrt(
+      ( ( (first(sensitivity_ci) - last(sensitivity_ci)) / (2 * 1.96) )^2 +
+         ((first(specificity_ci) - last(specificity_ci)) / (2 * 1.96))^2 )
+      / (4 * cases.force.tree$error.test.repeats$`Balanced Accuracy`^2 * 
+         (1 - cases.force.tree$error.test.repeats$`Balanced Accuracy`)^2) ),
+    bacc_err = 1.96 * sd_logit / sqrt(77), 
+    bacc_ci = 
+      ifelse((lower_ci == 1), 
+             invlogit(logit(cases.force.tree$error.test.repeats$`Balanced Accuracy`) - bacc_err),
+             invlogit(logit(cases.force.tree$error.test.repeats$`Balanced Accuracy`) + bacc_err))) %>% 
+  select(-bacc_err, -sd_logit)
 ```
 
 ```{r}           
 cases.op.tree$error.test.repeats
 data.frame("sensitivity_ci" = binom.test(34, 43)$conf.int, #Couldn't find way to extract values
-           "specificity_ci" = binom.test(29, 34)$conf.int,
-           "bacc_ci" = binom.test(round(cases.op.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int)
+           "specificity_ci" = binom.test(29, 34)$conf.int) %>% 
+  #Calculate BACC CI by using normal distribution with logit transformation (see above)
+  mutate(lower_ci = row_number(sensitivity_ci) %% 2 == 1) %>% 
+  mutate(
+    sd_logit = sqrt(
+      ( ( (first(sensitivity_ci) - last(sensitivity_ci)) / (2 * 1.96) )^2 +
+         ((first(specificity_ci) - last(specificity_ci)) / (2 * 1.96))^2 )
+      / (4 * cases.force.tree$error.test.repeats$`Balanced Accuracy`^2 * 
+         (1 - cases.force.tree$error.test.repeats$`Balanced Accuracy`)^2) ),
+    bacc_err = 1.96 * sd_logit / sqrt(77), 
+    bacc_ci = 
+      ifelse((lower_ci == 1), 
+             invlogit(logit(cases.force.tree$error.test.repeats$`Balanced Accuracy`) - bacc_err),
+             invlogit(logit(cases.force.tree$error.test.repeats$`Balanced Accuracy`) + bacc_err))) %>% 
+  select(-bacc_err, -sd_logit)
 ```
 
 ```{r}
 cases.law.tree$error.test.repeats
 data.frame("sensitivity_ci" = binom.test(11, 14)$conf.int, #Couldn't find way to extract values
-           "specificity_ci" = binom.test(59, 63)$conf.int,
-           "bacc_ci" = binom.test(round(cases.viol.tree$error.test.repeats$`Balanced Accuracy`* 77), 77)$conf.int)
+           "specificity_ci" = binom.test(59, 63)$conf.int) %>% 
+  #Calculate BACC CI by using normal distribution with logit transformation (see above)
+  mutate(lower_ci = row_number(sensitivity_ci) %% 2 == 1) %>% 
+  mutate(
+    sd_logit = sqrt(
+      ( ( (first(sensitivity_ci) - last(sensitivity_ci)) / (2 * 1.96) )^2 +
+         ((first(specificity_ci) - last(specificity_ci)) / (2 * 1.96))^2 )
+      / (4 * cases.law.tree$error.test.repeats$`Balanced Accuracy`^2 * 
+         (1 - cases.law.tree$error.test.repeats$`Balanced Accuracy`)^2) ),
+    bacc_err = 1.96 * sd_logit / sqrt(77), 
+    bacc_ci = 
+      ifelse((lower_ci == 1), 
+             invlogit(logit(cases.law.tree$error.test.repeats$`Balanced Accuracy`) - bacc_err),
+             invlogit(logit(cases.law.tree$error.test.repeats$`Balanced Accuracy`) + bacc_err))) %>% 
+  select(-bacc_err, -sd_logit)
 ```
 
 Side note: The difference between `tree$error.test.res.aggr`and `tree$error.test.res.mean`: Latter just takes the mean of the results of the 10 repeats while former aggregates the specific counts into a confusion matrix and then calculates the evaluation measures. The (theoretical) difference between `tree$error.test.repeats` and `tree$error.test.res.aggr`: Former relates to the repeats (default: `n.repeats` = 1) of the resampling process (summarizing those values with `... .mean` and `... .sd`) while `error.test.res` concerns the resamples in each repeat with `aggr` listing the aggregate values within each repeat (which is why they have the `$elevate.ADDTREE.repeat1` substructure) .

@@ -1405,18 +1405,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="37.665916"
-     inkscape:cy="368.41994"
+     inkscape:zoom="1.4"
+     inkscape:cx="440.69166"
+     inkscape:cy="361.65812"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3284"
      showgrid="false"
      showguides="false"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1013"
+     inkscape:window-width="2400"
+     inkscape:window-height="1284"
      inkscape:window-x="-9"
-     inkscape:window-y="1341"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:snap-text-baseline="true"
      inkscape:snap-bbox="true"
@@ -1469,7 +1469,7 @@
        id="guide1793"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="124.14669,151.0741"
+       position="132.78626,116.47875"
        orientation="1,0"
        id="guide1831"
        inkscape:locked="false" />
@@ -1489,7 +1489,7 @@
        id="guide1945"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="110.33841,158.3755"
+       position="105.37072,116.51518"
        orientation="1,0"
        id="guide1971"
        inkscape:locked="false" />
@@ -1503,6 +1503,14 @@
        orientation="0,1"
        id="guide2023"
        inkscape:locked="false" />
+    <sodipodi:guide
+       position="25.305922,113.64593"
+       orientation="1,0"
+       id="guide1633"
+       inkscape:locked="false" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid1640" />
   </sodipodi:namedview>
   <metadata
      id="metadata2358">
@@ -1786,22 +1794,26 @@
           <text
              id="text3292"
              style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,97.97,17.43)">
+             transform="scale(1,-1)"
+             x="97.74807"
+             y="-17.43">
             <tspan
                id="tspan3290"
                sodipodi:role="line"
-               y="0"
-               x="0 7.3369999 13.453 19.569 25.069 27.511 30.569 33.011002 38.511002 40.952999 44.011002">Sensitivity</tspan>
+               y="-17.43"
+               x="97.74807 105.08507 111.20107 117.31707 122.81707 125.25907 128.31708 130.75908 136.25908 138.70107 141.75908">Sensitivity</tspan>
           </text>
           <text
              id="text3296"
-             style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,113.558,4.13)">
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00004482px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="scale(1,-1)"
+             x="83.071526"
+             y="-5.1996307">
             <tspan
-               id="tspan3294"
                sodipodi:role="line"
-               y="0"
-               x="0 6.1160002 9.1739998 15.29">0.87</tspan>
+               id="tspan1638"
+               x="83.071526"
+               y="-5.1996307">0.87 [0.76, 0.94]</tspan>
           </text>
         </g>
       </g>
@@ -1827,22 +1839,26 @@
           <text
              id="text3330"
              style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,196.15,17.43)">
+             transform="scale(1,-1)"
+             x="196.52254"
+             y="-17.43">
             <tspan
                id="tspan3328"
                sodipodi:role="line"
-               y="0"
-               x="0 7.3369999 13.453 19.569 25.069 27.511 30.569 33.011002 38.511002 40.952999 44.011002">Specificity</tspan>
+               y="-17.43"
+               x="196.52254 203.85953 209.97554 216.09154 221.59154 224.03354 227.09154 229.53354 235.03354 237.47554 240.53354">Specificity</tspan>
           </text>
           <text
              id="text3334"
-             style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,211.738,4.13)">
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00004482px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="scale(1,-1)"
+             x="181.84599"
+             y="-5.1996307">
             <tspan
-               id="tspan3332"
                sodipodi:role="line"
-               y="0"
-               x="0 6.1160002 9.1739998 15.29">0.81</tspan>
+               id="tspan1642"
+               x="181.84599"
+               y="-5.1996307">0.81 [0.54, 0.96]</tspan>
           </text>
         </g>
       </g>
@@ -2209,22 +2225,26 @@
           <text
              id="text4106"
              style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,97.97,17.43)">
+             transform="scale(1,-1)"
+             x="97.979332"
+             y="-17.43">
             <tspan
                id="tspan4104"
                sodipodi:role="line"
-               y="0"
-               x="0 7.3369999 13.453 19.569 25.069 27.511 30.569 33.011002 38.511002 40.952999 44.011002">Sensitivity</tspan>
+               y="-17.43"
+               x="97.979332 105.31633 111.43233 117.54833 123.04833 125.49033 128.54834 130.99034 136.49034 138.93233 141.99034">Sensitivity</tspan>
           </text>
           <text
              id="text4110"
-             style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,113.558,4.13)">
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00004482px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="scale(1,-1)"
+             x="83.302788"
+             y="-5.1996307">
             <tspan
-               id="tspan4108"
                sodipodi:role="line"
-               y="0"
-               x="0 6.1160002 9.1739998 15.29">0.74</tspan>
+               id="tspan1644"
+               x="83.302788"
+               y="-5.1996307">0.74 [0.57, 0.87]</tspan>
           </text>
         </g>
       </g>
@@ -2250,22 +2270,26 @@
           <text
              id="text4144"
              style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,196.15,17.43)">
+             transform="scale(1,-1)"
+             x="195.82411"
+             y="-17.43">
             <tspan
                id="tspan4142"
                sodipodi:role="line"
-               y="0"
-               x="0 7.3369999 13.453 19.569 25.069 27.511 30.569 33.011002 38.511002 40.952999 44.011002">Specificity</tspan>
+               y="-17.43"
+               x="195.82411 203.1611 209.27711 215.39311 220.89311 223.33511 226.39311 228.83511 234.33511 236.77711 239.83511">Specificity</tspan>
           </text>
           <text
              id="text4148"
-             style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,211.738,4.13)">
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00004482px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="scale(1,-1)"
+             x="181.14757"
+             y="-5.1996307">
             <tspan
-               id="tspan4146"
                sodipodi:role="line"
-               y="0"
-               x="0 6.1160002 9.1739998 15.29">0.69</tspan>
+               id="tspan1646"
+               x="181.14757"
+               y="-5.1996307">0.69 [0.52, 0.83]</tspan>
           </text>
         </g>
       </g>
@@ -2884,22 +2908,26 @@
           <text
              id="text4926"
              style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,97.97,17.43)">
+             transform="scale(1,-1)"
+             x="97.74807"
+             y="-17.43">
             <tspan
                id="tspan4924"
                sodipodi:role="line"
-               y="0"
-               x="0 7.3369999 13.453 19.569 25.069 27.511 30.569 33.011002 38.511002 40.952999 44.011002">Sensitivity</tspan>
+               y="-17.43"
+               x="97.74807 105.08507 111.20107 117.31707 122.81707 125.25907 128.31708 130.75908 136.25908 138.70107 141.75908">Sensitivity</tspan>
           </text>
           <text
              id="text4930"
-             style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,113.558,4.13)">
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00004482px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="scale(1,-1)"
+             x="86.133064"
+             y="-5.201808">
             <tspan
-               id="tspan4928"
                sodipodi:role="line"
-               y="0"
-               x="0 6.1160002 9.1739998 15.29">0.79</tspan>
+               id="tspan1648"
+               x="86.133064"
+               y="-5.201808">0.79 [0.64, 0.9]</tspan>
           </text>
         </g>
       </g>
@@ -2939,22 +2967,26 @@
           <text
              id="text4964"
              style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,196.15,17.43)">
+             transform="scale(1,-1)"
+             x="196.52254"
+             y="-17.43">
             <tspan
                id="tspan4962"
                sodipodi:role="line"
-               y="0"
-               x="0 7.3369999 13.453 19.569 25.069 27.511 30.569 33.011002 38.511002 40.952999 44.011002">Specificity</tspan>
+               y="-17.43"
+               x="196.52254 203.85953 209.97554 216.09154 221.59154 224.03354 227.09154 229.53354 235.03354 237.47554 240.53354">Specificity</tspan>
           </text>
           <text
              id="text4968"
-             style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,211.738,4.13)">
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00004482px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="scale(1,-1)"
+             x="181.84599"
+             y="-5.201808">
             <tspan
-               id="tspan4966"
                sodipodi:role="line"
-               y="0"
-               x="0 6.1160002 9.1739998 15.29">0.85</tspan>
+               id="tspan1650"
+               x="181.84599"
+               y="-5.201808">0.85 [0.69, 0.95]</tspan>
           </text>
         </g>
       </g>
@@ -3375,22 +3407,26 @@
           <text
              id="text5746"
              style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,97.97,17.43)">
+             transform="scale(1,-1)"
+             x="97.979332"
+             y="-17.43">
             <tspan
                id="tspan5744"
                sodipodi:role="line"
-               y="0"
-               x="0 7.3369999 13.453 19.569 25.069 27.511 30.569 33.011002 38.511002 40.952999 44.011002">Sensitivity</tspan>
+               y="-17.43"
+               x="97.979332 105.31633 111.43233 117.54833 123.04833 125.49033 128.54834 130.99034 136.49034 138.93233 141.99034">Sensitivity</tspan>
           </text>
           <text
              id="text5750"
-             style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,113.558,4.13)">
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00004482px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="scale(1,-1)"
+             x="83.302788"
+             y="-5.201808">
             <tspan
-               id="tspan5748"
                sodipodi:role="line"
-               y="0"
-               x="0 6.1160002 9.1739998 15.29">0.79</tspan>
+               id="tspan1652"
+               x="83.302788"
+               y="-5.201808">0.79 [0.49, 0.95]</tspan>
           </text>
         </g>
       </g>
@@ -3416,22 +3452,26 @@
           <text
              id="text5784"
              style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,196.15,17.43)">
+             transform="scale(1,-1)"
+             x="195.82411"
+             y="-17.43">
             <tspan
                id="tspan5782"
                sodipodi:role="line"
-               y="0"
-               x="0 7.3369999 13.453 19.569 25.069 27.511 30.569 33.011002 38.511002 40.952999 44.011002">Specificity</tspan>
+               y="-17.43"
+               x="195.82411 203.1611 209.27711 215.39311 220.89311 223.33511 226.39311 228.83511 234.33511 236.77711 239.83511">Specificity</tspan>
           </text>
           <text
              id="text5788"
-             style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
-             transform="matrix(1,0,0,-1,211.738,4.13)">
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00004482px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="scale(1,-1)"
+             x="181.14757"
+             y="-5.201808">
             <tspan
-               id="tspan5786"
                sodipodi:role="line"
-               y="0"
-               x="0 6.1160002 9.1739998 15.29">0.94</tspan>
+               id="tspan1654"
+               x="181.14757"
+               y="-5.201808">0.94 [0.85, 0.98]</tspan>
           </text>
         </g>
       </g>
